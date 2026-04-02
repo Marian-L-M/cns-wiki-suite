@@ -46,7 +46,7 @@ return array(
 	'infobox-row' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
-		'name' => 'create-block/infobox-row',
+		'name' => 'cns-wiki-suite/infobox-row',
 		'version' => '0.1.0',
 		'title' => 'Infobox Row',
 		'category' => 'widgets',
