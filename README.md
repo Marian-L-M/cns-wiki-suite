@@ -1,6 +1,6 @@
 # CNS Wiki Suite
 
-A wordpress plugin toolset for create wiki like experiences
+A wordpress plugin block toolset for create wiki like experiences
 
 ## Description
 
