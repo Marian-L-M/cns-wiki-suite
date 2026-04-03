@@ -1,24 +1,58 @@
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps } from "@wordpress/block-editor";
 
-/**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#save
- *
- * @return {Element} Element to render.
- */
-export default function save() {
+function renderLink( item ) {
+	if ( ! item.linkUrl ) return null;
 	return (
-		<p { ...useBlockProps.save() }>
-			{ 'Infobox Row – hello from the saved content!' }
-		</p>
+		<>
+			{ " " }
+			<a
+				href={ item.linkUrl }
+				{ ...( item.linkNewTab
+					? { target: "_blank", rel: "noreferrer" }
+					: {} ) }
+			>
+				{ item.linkText || item.linkUrl }
+			</a>
+		</>
+	);
+}
+
+export default function save( { attributes } ) {
+	const { mode, items } = attributes;
+
+	const renderDatalist = () => (
+		<dl className="infobox-row__list">
+			{ items.map( ( item ) => (
+				<div key={ item.id } className="infobox-row__item">
+					<dt>{ item.dt }</dt>
+					<dd>
+						{ item.ddText }
+						{ renderLink( item ) }
+					</dd>
+				</div>
+			) ) }
+		</dl>
+	);
+
+	const renderTable = () => (
+		<table className="infobox-row__table">
+			<tbody>
+				{ items.map( ( item ) => (
+					<tr key={ item.id }>
+						<th scope="row">{ item.dt }</th>
+						<td>
+							{ item.ddText }
+							{ renderLink( item ) }
+						</td>
+					</tr>
+				) ) }
+			</tbody>
+		</table>
+	);
+
+	return (
+		<div { ...useBlockProps.save() }>
+			{ mode === "table" ? renderTable() : renderDatalist() }
+		</div>
 	);
 }

@@ -1,24 +1,53 @@
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks } from "@wordpress/block-editor";
 
-/**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#save
- *
- * @return {Element} Element to render.
- */
-export default function save() {
-	return (
-		<p { ...useBlockProps.save() }>
-			{ 'Infobox – hello from the saved content!' }
-		</p>
-	);
+export default function save({ attributes }) {
+  const { bg_color, text_color, contrast_color, infobox_title, display_mode } =
+    attributes;
+
+  const is_infobox_open = () => {
+    switch (display_mode) {
+      case "expanded__all":
+        return true;
+      default:
+        return false;
+    }
+  };
+
+  return (
+    <div
+      {...useBlockProps.save()}
+      data-wp-interactive="cns-wiki-suite/infobox"
+      data-wp-context={JSON.stringify({ isActive: is_infobox_open })}
+      style={{ backgroundColor: bg_color, color: text_color }}
+    >
+      <div
+        className={`infobox ${display_mode}`}
+        data-wp-bind--aria-expanded="context.isActive"
+        data-wp-class--is-active="context.isActive"
+      >
+        {infobox_title && (
+          <h2
+            className="infobox__title"
+            style={{ backgroundColor: contrast_color, color: text_color }}
+          >
+            {!(display_mode == "expanded__all") ? (
+              <button
+                className="toggle-btn"
+                data-wp-on--click="actions.toggle"
+                data-wp-bind--aria-expanded="context.isActive"
+                data-wp-class--toggle-is-active="context.isActive"
+              >
+                {infobox_title}
+              </button>
+            ) : (
+              infobox_title
+            )}
+          </h2>
+        )}
+        <div className="infobox__inner">
+          <InnerBlocks.Content />
+        </div>
+      </div>
+    </div>
+  );
 }

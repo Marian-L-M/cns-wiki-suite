@@ -6,14 +6,44 @@
 	"title": "Infobox",
 	"category": "widgets",
 	"icon": "smiley",
-	"description": "A infobox style block preset.",
+	"description": "An infobox style block preset.",
 	"example": {},
 	"supports": {
-		"html": false
+		"html": false,
+		"interactivity": true
 	},
+	 "attributes": {
+		"align": { "type": "string", "default": "full" },
+		"bg_color": {
+		"type": "string",
+		"default": "var(--wp--preset--color--element-bg)"
+		},
+		"contrast_color": {
+		"type": "string",
+		"default": "var(--wp--preset--color--element-contrast)"
+		},
+		"infobox_title": { "type": "string" },
+		"is_infobox_open": { "type": "boolean", "default": true },
+		"display_mode": {
+		"type": "string",
+		"default": "collapse__groups-mobile"
+		},
+		"text_color": {
+		"type": "string",
+		"default": "var(--wp--preset--color--text)"
+		}
+	},
+	"allowedBlocks": [
+		"cns-wiki-suite/infobox-group",
+		"cns-wiki-suite/infobox-row",
+		"core/paragraph",
+		"core/heading",
+		"core/list",
+		"core/image"
+	],
 	"textdomain": "infobox",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
-	"viewScript": "file:./view.js"
+	"viewScriptModule": "file:./view.js"
 }

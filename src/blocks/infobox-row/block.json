@@ -6,12 +6,22 @@
 	"title": "Infobox Row",
 	"category": "widgets",
 	"icon": "smiley",
-	"description": "Example block scaffolded with Create Block tool.",
+	"description": "Infobox style table row",
 	"example": {},
 	"supports": {
 		"html": false
 	},
-	"textdomain": "infobox-row",
+	"attributes": {
+		"mode": {
+		"type": "string",
+		"default": "datalist"
+		},
+		"items": {
+		"type": "array",
+		"default": []
+		}
+	},
+	"textdomain": "infobox",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",

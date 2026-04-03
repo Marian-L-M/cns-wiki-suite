@@ -11,7 +11,7 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       cns-wiki-suite
  *
- * @package CreateBlock
+ * @package CNS Wiki Suite
  */
 
 if (! defined('ABSPATH')) {
@@ -25,8 +25,19 @@ if (! defined('ABSPATH')) {
  * @see https://make.wordpress.org/core/2025/03/13/more-efficient-block-type-registration-in-6-8/
  * @see https://make.wordpress.org/core/2024/10/17/new-block-type-registration-apis-to-improve-performance-in-wordpress-6-7/
  */
+
+// Reference
+// https://developer.wordpress.org/news/2024/09/how-to-build-a-multi-block-plugin/
 function create_block_cns_wiki_suite_block_init()
 {
-	wp_register_block_types_from_metadata_collection(__DIR__ . '/build', __DIR__ . '/build/blocks-manifest.php');
+	wp_register_block_types_from_metadata_collection(__DIR__ . '/build/blocks', __DIR__ . '/build/blocks-manifest.php');
 }
 add_action('init', 'create_block_cns_wiki_suite_block_init');
+
+
+// Setup wiki post type
+require(__DIR__ .  "/wiki/setup.php");
+// class cnsWikiSuite
+// {
+// 	function __construct() {}
+// }
