@@ -56,7 +56,7 @@ function Edit({
       group_title: value
     });
   }
-  const TEMPLATE = [["cns-wiki-suite/infobox-row", {}]];
+  const TEMPLATE = [['cns-wiki-suite/infobox-row', {}]];
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)(),
     style: {
@@ -69,20 +69,20 @@ function Edit({
         initialOpen: true,
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Dsplay Mode", "infobox"),
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Dsplay Mode', 'infobox'),
             value: attributes.display_mode,
             options: [{
-              label: "Inherit",
-              value: "inherit"
+              label: 'Inherit',
+              value: 'inherit'
             }, {
-              label: "Collapse Default",
-              value: "collapse-ibg__default"
+              label: 'Collapse Default',
+              value: 'collapse-ibg__default'
             }, {
-              label: "Collapse Mobile",
-              value: "collapse-ibg__mobile"
+              label: 'Collapse Mobile',
+              value: 'collapse-ibg__mobile'
             }, {
-              label: "Never Collapse",
-              value: "collapse-ibg__never"
+              label: 'Never Collapse',
+              value: 'collapse-ibg__never'
             }],
             onChange: value => setAttributes({
               display_mode: value
@@ -94,7 +94,7 @@ function Edit({
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("fieldset", {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("legend", {
                 className: "blocks-base-control__label",
-                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Background color", "block-development-examples")
+                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Background color', 'block-development-examples')
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.ColorPalette, {
                 value: attributes.bg_color,
                 onChange: onChangeBGColor
@@ -102,7 +102,7 @@ function Edit({
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("fieldset", {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("legend", {
                 className: "blocks-base-control__label",
-                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Text color", "block-development-examples")
+                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Text color', 'block-development-examples')
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.ColorPalette, {
                 value: attributes.text_color,
                 onChange: onChangeTextColor
@@ -110,7 +110,7 @@ function Edit({
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("fieldset", {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("legend", {
                 className: "blocks-base-control__label",
-                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Contrast color", "block-development-examples")
+                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Contrast color', 'block-development-examples')
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.ColorPalette, {
                 value: attributes.contrast_color,
                 onChange: onChangeContrastColor
@@ -131,7 +131,7 @@ function Edit({
           value: attributes.group_title,
           onChange: updateGroupTitle,
           style: {
-            fontSize: "20px"
+            fontSize: '20px'
           }
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {

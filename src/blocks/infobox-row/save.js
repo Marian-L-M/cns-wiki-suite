@@ -1,19 +1,19 @@
-import { useBlockProps } from "@wordpress/block-editor";
+import { useBlockProps } from '@wordpress/block-editor';
 
 function renderLink( item ) {
 	if ( ! item.linkUrl ) return null;
 	return (
-		<>
-			{ " " }
+		<div>
+			{ ' ' }
 			<a
 				href={ item.linkUrl }
 				{ ...( item.linkNewTab
-					? { target: "_blank", rel: "noreferrer" }
+					? { target: '_blank', rel: 'noreferrer' }
 					: {} ) }
 			>
 				{ item.linkText || item.linkUrl }
 			</a>
-		</>
+		</div>
 	);
 }
 
@@ -52,7 +52,7 @@ export default function save( { attributes } ) {
 
 	return (
 		<div { ...useBlockProps.save() }>
-			{ mode === "table" ? renderTable() : renderDatalist() }
+			{ mode === 'table' ? renderTable() : renderDatalist() }
 		</div>
 	);
 }

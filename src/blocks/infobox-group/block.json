@@ -2,7 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "cns-wiki-suite/infobox-group",
-	"parent": ["cns-wiki-suite/infobox"],
+	"parent": [ "cns-wiki-suite/infobox" ],
 	"version": "0.1.0",
 	"title": "Infobox Group",
 	"category": "widgets",
@@ -18,12 +18,12 @@
 		"bg_color": { "type": "string", "default": "#f2f2f2" },
 		"text_color": { "type": "string", "default": "#000000" },
 		"contrast_color": {
-		"type": "string",
-		"default": "var(--wp--preset--color--element-contrast)"
+			"type": "string",
+			"default": "var(--wp--preset--color--element-contrast)"
 		},
 		"display_mode": {
-		"type": "string",
-		"default": "inherit"
+			"type": "string",
+			"default": "inherit"
 		}
 	},
 	"textdomain": "infobox",

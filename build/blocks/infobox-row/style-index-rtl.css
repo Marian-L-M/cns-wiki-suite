@@ -1,0 +1,60 @@
+/*!**********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/infobox-row/style.scss ***!
+  \**********************************************************************************************************************************************************************************************************************************************************/
+.wp-block-cns-theme-infobox-row {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: start;
+  justify-content: start;
+  gap: 2rem;
+  width: 100%;
+  min-height: 1.8em;
+  padding: 0.2em 0.1em;
+}
+
+.wp-block-cns-theme-infobox-row dl {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: start;
+  justify-content: start;
+  flex-wrap: wrap;
+  row-gap: 0.4em;
+  margin-block: 0;
+}
+
+.infobox-row__list {
+  width: 100%;
+}
+
+.infobox-row__item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: start;
+  justify-content: start;
+  width: 100%;
+}
+
+.infobox-row__item dd {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: end;
+  justify-content: space-between;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.wp-block-cns-theme-infobox-row dt {
+  width: 40%;
+  font-weight: 700;
+}
+
+.wp-block-cns-theme-infobox-row dd {
+  margin: 0;
+  width: 60%;
+}
