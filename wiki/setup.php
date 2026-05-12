@@ -66,16 +66,12 @@ function cns_post_tax_init()
                     [
                         'core/column',
                         [
-                            'className'     => 'cns-col cns-col__side cns-col__left cns-sidebar',
-                            'lock'          => ['move' => true, 'remove' => true],
-                            'templateLock'  => false,
-                            'allowedBlocks' => ['core/list', 'core/heading'],
+                            'className'    => 'cns-col cns-col__side cns-col__left cns-col__sidebar',
+                            'lock'         => ['move' => true, 'remove' => true],
+                            'templateLock' => false,
                         ],
                         [
-                            ['core/list', [], [
-                                ['core/list-item', ['content' => '<a href="/Wiki">Wiki</a>']],
-                                ['core/list-item', ['content' => '<a href="#">Link two</a>']],
-                            ]],
+                            ['core/template-part', ['slug' => 'sidebar']],
                         ],
                     ],
                     // Center column — content
@@ -87,12 +83,25 @@ function cns_post_tax_init()
                             'templateLock' => false,
                         ],
                         [
-                            ['core/post-title', ['level' => 1]],
-                            ['core/heading', ['level' => 2, 'content' => 'Introduction']],
-                            ['core/paragraph', ['placeholder' => 'Write a quick introduction on what this wiki article is about...']],
-                            ['core/separator', []],
-                            ['core/heading', ['level' => 2, 'placeholder' => 'Section Placeholder']],
-                            ['core/paragraph', ['placeholder' => 'Group your contents into easy sections']],
+                            [
+                                'cns-theme/cns-section',
+                                [
+                                    'title'         => '',
+                                    'titleLevel'    => 'h1',
+                                    'showUnderline' => true,
+                                ],
+                                [
+                                    ['cns-theme/cns-tab', ['label' => 'Option 1'], [
+                                        ['core/paragraph', ['placeholder' => 'Option 1 content goes here...']],
+                                    ]],
+                                    ['cns-theme/cns-tab', ['label' => 'Option 2'], [
+                                        ['core/paragraph', ['placeholder' => 'Option 2 content goes here...']],
+                                    ]],
+                                    ['cns-theme/cns-tab', ['label' => 'Option 3'], [
+                                        ['core/paragraph', ['placeholder' => 'Option 3 content goes here...']],
+                                    ]],
+                                ],
+                            ],
                         ],
                     ],
                     // Right column — per-post infobox
