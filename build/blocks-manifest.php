@@ -166,5 +166,118 @@ return array(
 		'style' => 'file:./style-index.css',
 		'render' => 'file:./render.php',
 		'viewScript' => 'file:./view.js'
+	),
+	'wiki-card' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'cns-wiki-suite/wiki-card',
+		'version' => '0.1.0',
+		'title' => 'Wiki Card',
+		'category' => 'widgets',
+		'icon' => 'index-card',
+		'description' => 'Display a post as a card with thumbnail, title, excerpt and link. Designed for wiki post types.',
+		'example' => array(
+			
+		),
+		'supports' => array(
+			'html' => false
+		),
+		'attributes' => array(
+			'postId' => array(
+				'type' => 'number',
+				'default' => 0
+			),
+			'postType' => array(
+				'type' => 'string',
+				'default' => 'wiki'
+			),
+			'backgroundColor' => array(
+				'type' => 'string',
+				'default' => '#f0f0f0'
+			),
+			'showThumbnail' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
+			'showTitle' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
+			'showExcerpt' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
+			'showLink' => array(
+				'type' => 'boolean',
+				'default' => true
+			)
+		),
+		'textdomain' => 'wiki-card',
+		'editorScript' => 'file:./index.js',
+		'editorStyle' => 'file:./index.css',
+		'style' => 'file:./style-index.css',
+		'render' => 'file:./render.php'
+	),
+	'wiki-contents' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'cns-wiki-suite/wiki-contents',
+		'version' => '0.1.0',
+		'title' => 'Wiki Contents',
+		'category' => 'widgets',
+		'icon' => 'grid-view',
+		'description' => 'A responsive grid of wiki cards. Populate manually or auto-fill with the newest wikis.',
+		'example' => array(
+			
+		),
+		'supports' => array(
+			'html' => false
+		),
+		'allowedBlocks' => array(
+			'cns-wiki-suite/wiki-card'
+		),
+		'attributes' => array(
+			'mode' => array(
+				'type' => 'string',
+				'default' => 'manual'
+			),
+			'columnsMobile' => array(
+				'type' => 'number',
+				'default' => 1
+			),
+			'columnsTablet' => array(
+				'type' => 'number',
+				'default' => 2
+			),
+			'columnsDesktop' => array(
+				'type' => 'number',
+				'default' => 3
+			),
+			'rowsMobile' => array(
+				'type' => 'number',
+				'default' => 2
+			),
+			'rowsTablet' => array(
+				'type' => 'number',
+				'default' => 2
+			),
+			'rowsDesktop' => array(
+				'type' => 'number',
+				'default' => 2
+			),
+			'columnGap' => array(
+				'type' => 'string',
+				'default' => '1rem'
+			),
+			'rowGap' => array(
+				'type' => 'string',
+				'default' => '1rem'
+			)
+		),
+		'textdomain' => 'wiki-contents',
+		'editorScript' => 'file:./index.js',
+		'editorStyle' => 'file:./index.css',
+		'style' => 'file:./style-index.css',
+		'render' => 'file:./render.php'
 	)
 );

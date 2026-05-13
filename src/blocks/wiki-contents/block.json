@@ -1,0 +1,31 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cns-wiki-suite/wiki-contents",
+	"version": "0.1.0",
+	"title": "Wiki Contents",
+	"category": "widgets",
+	"icon": "grid-view",
+	"description": "A responsive grid of wiki cards. Populate manually or auto-fill with the newest wikis.",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"allowedBlocks": [ "cns-wiki-suite/wiki-card" ],
+	"attributes": {
+		"mode": { "type": "string", "default": "manual" },
+		"columnsMobile":  { "type": "number", "default": 1 },
+		"columnsTablet":  { "type": "number", "default": 2 },
+		"columnsDesktop": { "type": "number", "default": 3 },
+		"rowsMobile":     { "type": "number", "default": 2 },
+		"rowsTablet":     { "type": "number", "default": 2 },
+		"rowsDesktop":    { "type": "number", "default": 2 },
+		"columnGap": { "type": "string", "default": "1rem" },
+		"rowGap":    { "type": "string", "default": "1rem" }
+	},
+	"textdomain": "wiki-contents",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}
