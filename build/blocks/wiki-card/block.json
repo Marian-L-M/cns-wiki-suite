@@ -24,6 +24,10 @@
       "type": "string",
       "default": "#f0f0f0"
     },
+    "textColor": {
+      "type": "string",
+      "default": ""
+    },
     "showThumbnail": {
       "type": "boolean",
       "default": true
@@ -32,9 +36,17 @@
       "type": "boolean",
       "default": true
     },
+    "showCategories": {
+      "type": "boolean",
+      "default": false
+    },
     "showExcerpt": {
       "type": "boolean",
       "default": true
+    },
+    "showTags": {
+      "type": "boolean",
+      "default": false
     },
     "showLink": {
       "type": "boolean",

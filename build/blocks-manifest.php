@@ -195,6 +195,10 @@ return array(
 				'type' => 'string',
 				'default' => '#f0f0f0'
 			),
+			'textColor' => array(
+				'type' => 'string',
+				'default' => ''
+			),
 			'showThumbnail' => array(
 				'type' => 'boolean',
 				'default' => true
@@ -203,9 +207,17 @@ return array(
 				'type' => 'boolean',
 				'default' => true
 			),
+			'showCategories' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
 			'showExcerpt' => array(
 				'type' => 'boolean',
 				'default' => true
+			),
+			'showTags' => array(
+				'type' => 'boolean',
+				'default' => false
 			),
 			'showLink' => array(
 				'type' => 'boolean',
@@ -253,25 +265,17 @@ return array(
 				'type' => 'number',
 				'default' => 3
 			),
-			'rowsMobile' => array(
+			'numberOfPosts' => array(
 				'type' => 'number',
-				'default' => 2
-			),
-			'rowsTablet' => array(
-				'type' => 'number',
-				'default' => 2
-			),
-			'rowsDesktop' => array(
-				'type' => 'number',
-				'default' => 2
+				'default' => 3
 			),
 			'columnGap' => array(
-				'type' => 'string',
-				'default' => '1rem'
+				'type' => 'number',
+				'default' => 16
 			),
 			'rowGap' => array(
-				'type' => 'string',
-				'default' => '1rem'
+				'type' => 'number',
+				'default' => 16
 			)
 		),
 		'textdomain' => 'wiki-contents',

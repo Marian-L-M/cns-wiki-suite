@@ -96,14 +96,19 @@ function CardPreview({
 }) {
   const {
     backgroundColor,
+    textColor,
     showThumbnail,
     showTitle,
+    showCategories,
     showExcerpt,
+    showTags,
     showLink
   } = attributes;
   const {
     post,
-    mediaUrl
+    mediaUrl,
+    catTerms,
+    tagTerms
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => {
     const {
       getEntityRecord,
@@ -112,9 +117,13 @@ function CardPreview({
     const p = getEntityRecord('postType', postType, postId);
     const mediaId = p?.featured_media;
     const media = mediaId ? getMedia(mediaId) : null;
+    const catTerms = (p?.categories ?? []).map(id => getEntityRecord('taxonomy', 'category', id)).filter(Boolean);
+    const tagTerms = (p?.tags ?? []).map(id => getEntityRecord('taxonomy', 'post_tag', id)).filter(Boolean);
     return {
       post: p,
-      mediaUrl: media?.media_details?.sizes?.medium?.source_url || media?.source_url || null
+      mediaUrl: media?.media_details?.sizes?.medium?.source_url || media?.source_url || null,
+      catTerms,
+      tagTerms
     };
   }, [postId, postType]);
   if (!post) {
@@ -128,11 +137,13 @@ function CardPreview({
   }
   const title = post.title?.rendered ?? '';
   const excerpt = post.excerpt?.rendered ?? '';
+  const cardStyle = {
+    backgroundColor
+  };
+  if (textColor) cardStyle.color = textColor;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
     className: "wiki-card",
-    style: {
-      backgroundColor
-    },
+    style: cardStyle,
     children: [showThumbnail && mediaUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
       className: "wiki-card__thumbnail",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
@@ -142,11 +153,23 @@ function CardPreview({
     }), showTitle && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h3", {
       className: "wiki-card__title",
       children: title
+    }), showCategories && catTerms.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      className: "wiki-card__categories",
+      children: catTerms.map(term => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+        className: "wiki-card__term wiki-card__term--category",
+        children: term.name
+      }, term.id))
     }), showExcerpt && excerpt && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
       className: "wiki-card__excerpt",
       dangerouslySetInnerHTML: {
         __html: excerpt
       }
+    }), showTags && tagTerms.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      className: "wiki-card__tags",
+      children: tagTerms.map(term => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+        className: "wiki-card__term wiki-card__term--tag",
+        children: term.name
+      }, term.id))
     }), showLink && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
       className: "wiki-card__link",
       children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Read more', 'wiki-card')
@@ -161,9 +184,12 @@ function Edit({
     postId,
     postType,
     backgroundColor,
+    textColor,
     showThumbnail,
     showTitle,
+    showCategories,
     showExcerpt,
+    showTags,
     showLink
   } = attributes;
   const [isModalOpen, setIsModalOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)(false);
@@ -195,10 +221,24 @@ function Edit({
           }),
           __nextHasNoMarginBottom: true
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show categories', 'wiki-card'),
+          checked: showCategories,
+          onChange: val => setAttributes({
+            showCategories: val
+          }),
+          __nextHasNoMarginBottom: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show excerpt', 'wiki-card'),
           checked: showExcerpt,
           onChange: val => setAttributes({
             showExcerpt: val
+          }),
+          __nextHasNoMarginBottom: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show tags', 'wiki-card'),
+          checked: showTags,
+          onChange: val => setAttributes({
+            showTags: val
           }),
           __nextHasNoMarginBottom: true
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
@@ -209,10 +249,10 @@ function Edit({
           }),
           __nextHasNoMarginBottom: true
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
         title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Color', 'wiki-card'),
         initialOpen: false,
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("fieldset", {
             style: {
               width: '100%'
@@ -227,7 +267,22 @@ function Edit({
               })
             })]
           })
-        })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("fieldset", {
+            style: {
+              width: '100%'
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("legend", {
+              className: "blocks-base-control__label",
+              children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Text color', 'wiki-card')
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPalette, {
+              value: textColor,
+              onChange: val => setAttributes({
+                textColor: val ?? ''
+              })
+            })]
+          })
+        })]
       }), postId > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
         title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Post', 'wiki-card'),
         initialOpen: false,
@@ -413,7 +468,7 @@ module.exports = window["wp"]["i18n"];
   \*****************************************/
 (module) {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"cns-wiki-suite/wiki-card","version":"0.1.0","title":"Wiki Card","category":"widgets","icon":"index-card","description":"Display a post as a card with thumbnail, title, excerpt and link. Designed for wiki post types.","example":{},"supports":{"html":false},"attributes":{"postId":{"type":"number","default":0},"postType":{"type":"string","default":"wiki"},"backgroundColor":{"type":"string","default":"#f0f0f0"},"showThumbnail":{"type":"boolean","default":true},"showTitle":{"type":"boolean","default":true},"showExcerpt":{"type":"boolean","default":true},"showLink":{"type":"boolean","default":true}},"textdomain":"wiki-card","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"cns-wiki-suite/wiki-card","version":"0.1.0","title":"Wiki Card","category":"widgets","icon":"index-card","description":"Display a post as a card with thumbnail, title, excerpt and link. Designed for wiki post types.","example":{},"supports":{"html":false},"attributes":{"postId":{"type":"number","default":0},"postType":{"type":"string","default":"wiki"},"backgroundColor":{"type":"string","default":"#f0f0f0"},"textColor":{"type":"string","default":""},"showThumbnail":{"type":"boolean","default":true},"showTitle":{"type":"boolean","default":true},"showCategories":{"type":"boolean","default":false},"showExcerpt":{"type":"boolean","default":true},"showTags":{"type":"boolean","default":false},"showLink":{"type":"boolean","default":true}},"textdomain":"wiki-card","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
 
 /***/ }
 

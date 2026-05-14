@@ -11,18 +11,18 @@ $mode            = $attributes['mode']           ?? 'manual';
 $columns_mobile  = intval( $attributes['columnsMobile']  ?? 1 );
 $columns_tablet  = intval( $attributes['columnsTablet']  ?? 2 );
 $columns_desktop = intval( $attributes['columnsDesktop'] ?? 3 );
-$rows_desktop    = intval( $attributes['rowsDesktop']    ?? 2 );
-$column_gap      = $attributes['columnGap'] ?? '1rem';
-$row_gap         = $attributes['rowGap']    ?? '1rem';
+$number_of_posts = intval( $attributes['numberOfPosts'] ?? $columns_desktop );
+$column_gap      = intval( $attributes['columnGap'] ?? 16 );
+$row_gap         = intval( $attributes['rowGap']    ?? 16 );
 
 // CSS custom properties drive the responsive grid via style.scss media queries.
 $grid_vars = sprintf(
-	'--wiki-columns-mobile:%d;--wiki-columns-tablet:%d;--wiki-columns-desktop:%d;--wiki-column-gap:%s;--wiki-row-gap:%s;',
+	'--wiki-columns-mobile:%d;--wiki-columns-tablet:%d;--wiki-columns-desktop:%d;--wiki-column-gap:%dpx;--wiki-row-gap:%dpx;',
 	$columns_mobile,
 	$columns_tablet,
 	$columns_desktop,
-	esc_attr( $column_gap ),
-	esc_attr( $row_gap )
+	$column_gap,
+	$row_gap
 );
 
 $wrapper_attrs = get_block_wrapper_attributes( [
@@ -31,7 +31,7 @@ $wrapper_attrs = get_block_wrapper_attributes( [
 ] );
 
 if ( 'newest' === $mode ) {
-	$total = $columns_desktop * $rows_desktop;
+	$total = $number_of_posts;
 
 	$query = new WP_Query( [
 		'post_type'      => 'wiki',

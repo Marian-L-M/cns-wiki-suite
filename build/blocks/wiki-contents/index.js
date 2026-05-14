@@ -42,34 +42,21 @@ function GridTabs({
   setAttributes
 }) {
   const columnKey = `columns${breakpoint}`;
-  const rowKey = `rows${breakpoint}`;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.RangeControl, {
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Columns', 'wiki-contents'),
-      value: attributes[columnKey],
-      onChange: v => setAttributes({
-        [columnKey]: v
-      }),
-      min: 1,
-      max: 6,
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: true
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.RangeControl, {
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Rows', 'wiki-contents'),
-      value: attributes[rowKey],
-      onChange: v => setAttributes({
-        [rowKey]: v
-      }),
-      min: 1,
-      max: 12,
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: true
-    })]
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.RangeControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Columns', 'wiki-contents'),
+    value: attributes[columnKey],
+    onChange: v => setAttributes({
+      [columnKey]: v
+    }),
+    min: 1,
+    max: 6,
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true
   });
 }
 function NewestPreviewGrid({
   columns,
-  rows,
+  numberOfPosts,
   columnGap,
   rowGap
 }) {
@@ -80,7 +67,7 @@ function NewestPreviewGrid({
       '--wiki-column-gap': columnGap,
       '--wiki-row-gap': rowGap
     },
-    children: Array(columns * rows).fill(null).map((_, i) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+    children: Array(numberOfPosts).fill(null).map((_, i) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
       className: "wiki-contents__placeholder-cell",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
         className: "wiki-contents__placeholder-label",
@@ -99,9 +86,7 @@ function Edit({
     columnsMobile,
     columnsTablet,
     columnsDesktop,
-    rowsMobile,
-    rowsTablet,
-    rowsDesktop,
+    numberOfPosts,
     columnGap,
     rowGap
   } = attributes;
@@ -110,26 +95,25 @@ function Edit({
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.store);
   const innerBlocks = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(select => select(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.store).getBlocks(clientId), [clientId]);
 
-  // Keep inner block count in sync with desktop columns × rows when in manual mode.
+  // Keep inner block count in sync with numberOfPosts when in manual mode.
   // Additions append empty cards; reductions trim from the end preserving selections.
-  const totalCells = columnsDesktop * rowsDesktop;
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
     if (mode !== 'manual') return;
     const current = innerBlocks.length;
-    if (current === totalCells) return;
-    if (current < totalCells) {
-      const added = Array(totalCells - current).fill(null).map(() => (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.createBlock)('cns-wiki-suite/wiki-card', {}));
+    if (current === numberOfPosts) return;
+    if (current < numberOfPosts) {
+      const added = Array(numberOfPosts - current).fill(null).map(() => (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.createBlock)('cns-wiki-suite/wiki-card', {}));
       replaceInnerBlocks(clientId, [...innerBlocks, ...added], false);
     } else {
-      replaceInnerBlocks(clientId, innerBlocks.slice(0, totalCells), false);
+      replaceInnerBlocks(clientId, innerBlocks.slice(0, numberOfPosts), false);
     }
-  }, [totalCells, mode]);
+  }, [numberOfPosts, mode]);
   const gridStyle = {
     '--wiki-columns-desktop': columnsDesktop,
     '--wiki-columns-tablet': columnsTablet,
     '--wiki-columns-mobile': columnsMobile,
-    '--wiki-column-gap': columnGap,
-    '--wiki-row-gap': rowGap
+    '--wiki-column-gap': `${columnGap}px`,
+    '--wiki-row-gap': `${rowGap}px`
   };
 
   // Always mount InnerBlocks so WordPress state is preserved when toggling modes.
@@ -171,7 +155,17 @@ function Edit({
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
         title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Grid Settings', 'wiki-contents'),
         initialOpen: true,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.TabPanel, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.RangeControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Number of posts', 'wiki-contents'),
+          value: numberOfPosts,
+          onChange: v => setAttributes({
+            numberOfPosts: v
+          }),
+          min: 1,
+          max: 24,
+          __nextHasNoMarginBottom: true,
+          __next40pxDefaultSize: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.TabPanel, {
           tabs: [{
             name: 'Mobile',
             title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Mobile', 'wiki-contents')
@@ -188,33 +182,31 @@ function Edit({
             attributes: attributes,
             setAttributes: setAttributes
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelRow, {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.TextControl, {
-            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Column gap', 'wiki-contents'),
-            value: columnGap,
-            onChange: v => setAttributes({
-              columnGap: v
-            }),
-            help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Any CSS value: 1rem, 16px, 2%…', 'wiki-contents'),
-            __nextHasNoMarginBottom: true,
-            __next40pxDefaultSize: true
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelRow, {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.TextControl, {
-            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Row gap', 'wiki-contents'),
-            value: rowGap,
-            onChange: v => setAttributes({
-              rowGap: v
-            }),
-            help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Any CSS value: 1rem, 16px, 2%…', 'wiki-contents'),
-            __nextHasNoMarginBottom: true,
-            __next40pxDefaultSize: true
-          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.RangeControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Column gap (px)', 'wiki-contents'),
+          value: columnGap,
+          onChange: v => setAttributes({
+            columnGap: v
+          }),
+          min: 0,
+          max: 80,
+          __nextHasNoMarginBottom: true,
+          __next40pxDefaultSize: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.RangeControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Row gap (px)', 'wiki-contents'),
+          value: rowGap,
+          onChange: v => setAttributes({
+            rowGap: v
+          }),
+          min: 0,
+          max: 80,
+          __nextHasNoMarginBottom: true,
+          __next40pxDefaultSize: true
         })]
       })]
     }), mode === 'newest' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(NewestPreviewGrid, {
       columns: columnsDesktop,
-      rows: rowsDesktop,
+      numberOfPosts: numberOfPosts,
       columnGap: columnGap,
       rowGap: rowGap
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
@@ -372,7 +364,7 @@ module.exports = window["wp"]["i18n"];
   \*********************************************/
 (module) {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"cns-wiki-suite/wiki-contents","version":"0.1.0","title":"Wiki Contents","category":"widgets","icon":"grid-view","description":"A responsive grid of wiki cards. Populate manually or auto-fill with the newest wikis.","example":{},"supports":{"html":false},"allowedBlocks":["cns-wiki-suite/wiki-card"],"attributes":{"mode":{"type":"string","default":"manual"},"columnsMobile":{"type":"number","default":1},"columnsTablet":{"type":"number","default":2},"columnsDesktop":{"type":"number","default":3},"rowsMobile":{"type":"number","default":2},"rowsTablet":{"type":"number","default":2},"rowsDesktop":{"type":"number","default":2},"columnGap":{"type":"string","default":"1rem"},"rowGap":{"type":"string","default":"1rem"}},"textdomain":"wiki-contents","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"cns-wiki-suite/wiki-contents","version":"0.1.0","title":"Wiki Contents","category":"widgets","icon":"grid-view","description":"A responsive grid of wiki cards. Populate manually or auto-fill with the newest wikis.","example":{},"supports":{"html":false},"allowedBlocks":["cns-wiki-suite/wiki-card"],"attributes":{"mode":{"type":"string","default":"manual"},"columnsMobile":{"type":"number","default":1},"columnsTablet":{"type":"number","default":2},"columnsDesktop":{"type":"number","default":3},"numberOfPosts":{"type":"number","default":3},"columnGap":{"type":"number","default":16},"rowGap":{"type":"number","default":16}},"textdomain":"wiki-contents","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
 
 /***/ }
 

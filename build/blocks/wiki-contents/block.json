@@ -31,25 +31,17 @@
       "type": "number",
       "default": 3
     },
-    "rowsMobile": {
+    "numberOfPosts": {
       "type": "number",
-      "default": 2
-    },
-    "rowsTablet": {
-      "type": "number",
-      "default": 2
-    },
-    "rowsDesktop": {
-      "type": "number",
-      "default": 2
+      "default": 3
     },
     "columnGap": {
-      "type": "string",
-      "default": "1rem"
+      "type": "number",
+      "default": 16
     },
     "rowGap": {
-      "type": "string",
-      "default": "1rem"
+      "type": "number",
+      "default": 16
     }
   },
   "textdomain": "wiki-contents",

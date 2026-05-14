@@ -10,11 +10,9 @@ import { createBlock } from '@wordpress/blocks';
 import { useEffect } from '@wordpress/element';
 import {
 	PanelBody,
-	PanelRow,
 	RangeControl,
 	RadioControl,
 	TabPanel,
-	TextControl,
 } from '@wordpress/components';
 import './editor.scss';
 
@@ -22,33 +20,21 @@ const ALLOWED_BLOCKS = [ 'cns-wiki-suite/wiki-card' ];
 
 function GridTabs( { breakpoint, attributes, setAttributes } ) {
 	const columnKey = `columns${ breakpoint }`;
-	const rowKey    = `rows${ breakpoint }`;
 
 	return (
-		<>
-			<RangeControl
-				label={ __( 'Columns', 'wiki-contents' ) }
-				value={ attributes[ columnKey ] }
-				onChange={ ( v ) => setAttributes( { [ columnKey ]: v } ) }
-				min={ 1 }
-				max={ 6 }
-				__nextHasNoMarginBottom
-				__next40pxDefaultSize
-			/>
-			<RangeControl
-				label={ __( 'Rows', 'wiki-contents' ) }
-				value={ attributes[ rowKey ] }
-				onChange={ ( v ) => setAttributes( { [ rowKey ]: v } ) }
-				min={ 1 }
-				max={ 12 }
-				__nextHasNoMarginBottom
-				__next40pxDefaultSize
-			/>
-		</>
+		<RangeControl
+			label={ __( 'Columns', 'wiki-contents' ) }
+			value={ attributes[ columnKey ] }
+			onChange={ ( v ) => setAttributes( { [ columnKey ]: v } ) }
+			min={ 1 }
+			max={ 6 }
+			__nextHasNoMarginBottom
+			__next40pxDefaultSize
+		/>
 	);
 }
 
-function NewestPreviewGrid( { columns, rows, columnGap, rowGap } ) {
+function NewestPreviewGrid( { columns, numberOfPosts, columnGap, rowGap } ) {
 	return (
 		<div
 			className="wiki-contents__grid wiki-contents__grid--preview"
@@ -58,7 +44,7 @@ function NewestPreviewGrid( { columns, rows, columnGap, rowGap } ) {
 				'--wiki-row-gap': rowGap,
 			} }
 		>
-			{ Array( columns * rows )
+			{ Array( numberOfPosts )
 				.fill( null )
 				.map( ( _, i ) => (
 					<div key={ i } className="wiki-contents__placeholder-cell">
@@ -77,9 +63,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		columnsMobile,
 		columnsTablet,
 		columnsDesktop,
-		rowsMobile,
-		rowsTablet,
-		rowsDesktop,
+		numberOfPosts,
 		columnGap,
 		rowGap,
 	} = attributes;
@@ -90,30 +74,29 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		[ clientId ]
 	);
 
-	// Keep inner block count in sync with desktop columns × rows when in manual mode.
+	// Keep inner block count in sync with numberOfPosts when in manual mode.
 	// Additions append empty cards; reductions trim from the end preserving selections.
-	const totalCells = columnsDesktop * rowsDesktop;
 	useEffect( () => {
 		if ( mode !== 'manual' ) return;
 		const current = innerBlocks.length;
-		if ( current === totalCells ) return;
+		if ( current === numberOfPosts ) return;
 
-		if ( current < totalCells ) {
-			const added = Array( totalCells - current )
+		if ( current < numberOfPosts ) {
+			const added = Array( numberOfPosts - current )
 				.fill( null )
 				.map( () => createBlock( 'cns-wiki-suite/wiki-card', {} ) );
 			replaceInnerBlocks( clientId, [ ...innerBlocks, ...added ], false );
 		} else {
-			replaceInnerBlocks( clientId, innerBlocks.slice( 0, totalCells ), false );
+			replaceInnerBlocks( clientId, innerBlocks.slice( 0, numberOfPosts ), false );
 		}
-	}, [ totalCells, mode ] );
+	}, [ numberOfPosts, mode ] );
 
 	const gridStyle = {
 		'--wiki-columns-desktop': columnsDesktop,
 		'--wiki-columns-tablet':  columnsTablet,
 		'--wiki-columns-mobile':  columnsMobile,
-		'--wiki-column-gap':      columnGap,
-		'--wiki-row-gap':         rowGap,
+		'--wiki-column-gap':      `${ columnGap }px`,
+		'--wiki-row-gap':         `${ rowGap }px`,
 	};
 
 	// Always mount InnerBlocks so WordPress state is preserved when toggling modes.
@@ -149,6 +132,15 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 				</PanelBody>
 
 				<PanelBody title={ __( 'Grid Settings', 'wiki-contents' ) } initialOpen={ true }>
+					<RangeControl
+						label={ __( 'Number of posts', 'wiki-contents' ) }
+						value={ numberOfPosts }
+						onChange={ ( v ) => setAttributes( { numberOfPosts: v } ) }
+						min={ 1 }
+						max={ 24 }
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
+					/>
 					<TabPanel
 						tabs={ [
 							{ name: 'Mobile',  title: __( 'Mobile',  'wiki-contents' ) },
@@ -165,33 +157,31 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 							/>
 						) }
 					</TabPanel>
-					<PanelRow>
-						<TextControl
-							label={ __( 'Column gap', 'wiki-contents' ) }
-							value={ columnGap }
-							onChange={ ( v ) => setAttributes( { columnGap: v } ) }
-							help={ __( 'Any CSS value: 1rem, 16px, 2%…', 'wiki-contents' ) }
-							__nextHasNoMarginBottom
-							__next40pxDefaultSize
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={ __( 'Row gap', 'wiki-contents' ) }
-							value={ rowGap }
-							onChange={ ( v ) => setAttributes( { rowGap: v } ) }
-							help={ __( 'Any CSS value: 1rem, 16px, 2%…', 'wiki-contents' ) }
-							__nextHasNoMarginBottom
-							__next40pxDefaultSize
-						/>
-					</PanelRow>
+					<RangeControl
+						label={ __( 'Column gap (px)', 'wiki-contents' ) }
+						value={ columnGap }
+						onChange={ ( v ) => setAttributes( { columnGap: v } ) }
+						min={ 0 }
+						max={ 80 }
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
+					/>
+					<RangeControl
+						label={ __( 'Row gap (px)', 'wiki-contents' ) }
+						value={ rowGap }
+						onChange={ ( v ) => setAttributes( { rowGap: v } ) }
+						min={ 0 }
+						max={ 80 }
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
+					/>
 				</PanelBody>
 			</InspectorControls>
 
 			{ mode === 'newest' && (
 				<NewestPreviewGrid
 					columns={ columnsDesktop }
-					rows={ rowsDesktop }
+					numberOfPosts={ numberOfPosts }
 					columnGap={ columnGap }
 					rowGap={ rowGap }
 				/>

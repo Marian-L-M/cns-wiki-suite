@@ -46,6 +46,31 @@
   margin: 0;
 }
 
+.wiki-card__categories, .wiki-card__tags {
+  padding: 0.25rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.wiki-card__term {
+  font-size: 0.75rem;
+  line-height: 1;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.wiki-card__term--category {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.wiki-card__term--tag {
+  border: 1px solid currentColor;
+  opacity: 0.65;
+}
+
 .wiki-card__link {
   display: inline-block;
   padding: 0.5rem 1rem 0.75rem;

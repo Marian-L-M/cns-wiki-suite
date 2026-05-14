@@ -17,11 +17,9 @@
 		"columnsMobile":  { "type": "number", "default": 1 },
 		"columnsTablet":  { "type": "number", "default": 2 },
 		"columnsDesktop": { "type": "number", "default": 3 },
-		"rowsMobile":     { "type": "number", "default": 2 },
-		"rowsTablet":     { "type": "number", "default": 2 },
-		"rowsDesktop":    { "type": "number", "default": 2 },
-		"columnGap": { "type": "string", "default": "1rem" },
-		"rowGap":    { "type": "string", "default": "1rem" }
+		"numberOfPosts":  { "type": "number", "default": 3 },
+		"columnGap": { "type": "number", "default": 16 },
+		"rowGap":    { "type": "number", "default": 16 }
 	},
 	"textdomain": "wiki-contents",
 	"editorScript": "file:./index.js",

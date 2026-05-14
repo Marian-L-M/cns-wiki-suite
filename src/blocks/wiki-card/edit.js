@@ -74,21 +74,40 @@ function PostSelectorModal( { currentPostType, onSelect, onClose } ) {
 }
 
 function CardPreview( { postId, postType, attributes } ) {
-	const { backgroundColor, showThumbnail, showTitle, showExcerpt, showLink } =
-		attributes;
+	const {
+		backgroundColor,
+		textColor,
+		showThumbnail,
+		showTitle,
+		showCategories,
+		showExcerpt,
+		showTags,
+		showLink,
+	} = attributes;
 
-	const { post, mediaUrl } = useSelect(
+	const { post, mediaUrl, catTerms, tagTerms } = useSelect(
 		( select ) => {
 			const { getEntityRecord, getMedia } = select( coreDataStore );
 			const p = getEntityRecord( 'postType', postType, postId );
 			const mediaId = p?.featured_media;
 			const media = mediaId ? getMedia( mediaId ) : null;
+
+			const catTerms = ( p?.categories ?? [] )
+				.map( ( id ) => getEntityRecord( 'taxonomy', 'category', id ) )
+				.filter( Boolean );
+
+			const tagTerms = ( p?.tags ?? [] )
+				.map( ( id ) => getEntityRecord( 'taxonomy', 'post_tag', id ) )
+				.filter( Boolean );
+
 			return {
 				post: p,
 				mediaUrl:
 					media?.media_details?.sizes?.medium?.source_url ||
 					media?.source_url ||
 					null,
+				catTerms,
+				tagTerms,
 			};
 		},
 		[ postId, postType ]
@@ -105,19 +124,40 @@ function CardPreview( { postId, postType, attributes } ) {
 	const title = post.title?.rendered ?? '';
 	const excerpt = post.excerpt?.rendered ?? '';
 
+	const cardStyle = { backgroundColor };
+	if ( textColor ) cardStyle.color = textColor;
+
 	return (
-		<div className="wiki-card" style={ { backgroundColor } }>
+		<div className="wiki-card" style={ cardStyle }>
 			{ showThumbnail && mediaUrl && (
 				<div className="wiki-card__thumbnail">
 					<img src={ mediaUrl } alt={ title } />
 				</div>
 			) }
 			{ showTitle && <h3 className="wiki-card__title">{ title }</h3> }
+			{ showCategories && catTerms.length > 0 && (
+				<div className="wiki-card__categories">
+					{ catTerms.map( ( term ) => (
+						<span key={ term.id } className="wiki-card__term wiki-card__term--category">
+							{ term.name }
+						</span>
+					) ) }
+				</div>
+			) }
 			{ showExcerpt && excerpt && (
 				<div
 					className="wiki-card__excerpt"
 					dangerouslySetInnerHTML={ { __html: excerpt } }
 				/>
+			) }
+			{ showTags && tagTerms.length > 0 && (
+				<div className="wiki-card__tags">
+					{ tagTerms.map( ( term ) => (
+						<span key={ term.id } className="wiki-card__term wiki-card__term--tag">
+							{ term.name }
+						</span>
+					) ) }
+				</div>
 			) }
 			{ showLink && (
 				<span className="wiki-card__link">
@@ -133,9 +173,12 @@ export default function Edit( { attributes, setAttributes } ) {
 		postId,
 		postType,
 		backgroundColor,
+		textColor,
 		showThumbnail,
 		showTitle,
+		showCategories,
 		showExcerpt,
+		showTags,
 		showLink,
 	} = attributes;
 
@@ -163,9 +206,21 @@ export default function Edit( { attributes, setAttributes } ) {
 						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
+						label={ __( 'Show categories', 'wiki-card' ) }
+						checked={ showCategories }
+						onChange={ ( val ) => setAttributes( { showCategories: val } ) }
+						__nextHasNoMarginBottom
+					/>
+					<ToggleControl
 						label={ __( 'Show excerpt', 'wiki-card' ) }
 						checked={ showExcerpt }
 						onChange={ ( val ) => setAttributes( { showExcerpt: val } ) }
+						__nextHasNoMarginBottom
+					/>
+					<ToggleControl
+						label={ __( 'Show tags', 'wiki-card' ) }
+						checked={ showTags }
+						onChange={ ( val ) => setAttributes( { showTags: val } ) }
 						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
@@ -185,6 +240,19 @@ export default function Edit( { attributes, setAttributes } ) {
 								value={ backgroundColor }
 								onChange={ ( val ) =>
 									setAttributes( { backgroundColor: val ?? '#f0f0f0' } )
+								}
+							/>
+						</fieldset>
+					</PanelRow>
+					<PanelRow>
+						<fieldset style={ { width: '100%' } }>
+							<legend className="blocks-base-control__label">
+								{ __( 'Text color', 'wiki-card' ) }
+							</legend>
+							<ColorPalette
+								value={ textColor }
+								onChange={ ( val ) =>
+									setAttributes( { textColor: val ?? '' } )
 								}
 							/>
 						</fieldset>
