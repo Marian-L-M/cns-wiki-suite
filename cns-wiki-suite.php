@@ -36,7 +36,10 @@ add_action('init', 'create_block_cns_wiki_suite_block_init');
 
 
 // Setup wiki post type
-require(__DIR__ .  "/wiki/setup.php");
+require __DIR__ . '/wiki/setup.php';
+
+// CNS theme admin panel integration
+require __DIR__ . '/admin/cns-wiki-admin.php';
 // class cnsWikiSuite
 // {
 // 	function __construct() {}

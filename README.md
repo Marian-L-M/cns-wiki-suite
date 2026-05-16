@@ -1,60 +1,94 @@
 # CNS Wiki Suite
 
-A wordpress plugin block toolset for create wiki like experiences
+A WordPress block toolset for building wiki-like experiences. Designed as a first-party extension to the **Clouds And Spaceships** theme.
+
+---
 
 ## Description
 
-This plugin is meant as an extension to the Clouds and Spaceships theme. It should enable the user to create infoboxes and overview screens for easy information organizaiton. While a neutral theme in design, the Clouds and Spaceships Wiki Suite is mainly directed towards writers, fans, and world builders.
+CNS Wiki Suite adds blocks and tooling to help writers, fans, and world-builders organise information. It provides structured content types (wiki posts), display blocks (wiki card, wiki contents, infobox family), and integrates into the CNS theme admin panel.
 
-An integration for maps is planned at a later point in time.
+---
 
-## Getting Started
+## Requirements
 
-### Dependencies
+| Requirement | Minimum |
+|---|---|
+| WordPress | 6.8 |
+| PHP | 8.0 |
+| CNS Theme | any (admin integration is optional) |
 
-* Wordpress 6.8
-* PHP 8.0
+---
 
-### Installing
+## Installation
 
-* How/where to download your program
-* Any modifications needed to be made to files/folders
+1. Upload the `cns-wiki-suite` folder to `/wp-content/plugins/`.
+2. Activate the plugin via **Plugins → Installed Plugins**.
+3. The **Wiki** post type and blocks are immediately available.
+4. If the CNS theme is active, a **Wiki** tab appears in **CNS → Wiki** in the admin sidebar.
 
-### Executing program
+---
 
-* How to run the program
-* Step-by-step bullets
+## Blocks
+
+| Block | Description |
+|---|---|
+| `wiki-card` | Displays a linked card for a wiki post with thumbnail, title, categories, tags, and excerpt |
+| `wiki-contents` | Grid of wiki cards — manual (inner blocks) or automatic (newest N posts) |
+| `infobox` | Key/value infobox row |
+| `infobox-row` | Horizontal group of infoboxes |
+| `infobox-group` | Collapsible container for infobox rows |
+
+---
+
+## CNS theme admin integration
+
+When the CNS theme is active, the plugin registers a **Wiki** tab on the **Clouds And Spaceships** settings page via the `cns_admin_tabs` filter. No configuration is needed — the tab appears automatically on activation and disappears on deactivation.
+
+The integration lives in `admin/cns-wiki-admin.php`. The tab content partial is at `admin/partials/tab-wiki.php`.
+
+### How the hook works
+
+```php
+// admin/cns-wiki-admin.php
+add_filter( 'cns_admin_tabs', function ( array $tabs ): array {
+    $tabs['wiki'] = [
+        'menu_title' => 'Wiki',
+        'title'      => 'CNS Wiki Suite',
+        'capability' => 'manage_options',
+        'callback'   => 'cns_wiki_admin_render_tab',
+        'priority'   => 20,
+    ];
+    return $tabs;
+} );
 ```
-code blocks for commands
+
+If the CNS theme is not active the filter is never called and the file is a no-op. See the theme's `functions/theme-admin/README.md` for the full tab definition reference.
+
+---
+
+## File structure
+
+```
+cns-wiki-suite/
+  cns-wiki-suite.php       — plugin entry point
+  admin/
+    cns-wiki-admin.php     — CNS theme admin tab registration
+    partials/
+      tab-wiki.php         — Wiki tab content
+  src/blocks/              — block source files
+  build/blocks/            — compiled block assets
+  wiki/
+    setup.php              — wiki post type registration
+  templates/               — block theme templates
 ```
 
-## Help
-
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
+---
 
 ## Authors
 
-Contributors names and contact info
-
 Marian Maschke (Nama Tamago Dev)
-[]()
-
-## Version History
-
-* 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
-* 0.1
-    * Initial Release
 
 ## License
 
-This project is licensed under the [GPL-2.0] License - see the details [HERE](https://www.gnu.org/licenses/gpl-2.0.html)
-
-## Acknowledgments
-
-Inspiration, code snippets, etc.
-* [])
+[GPL-2.0](https://www.gnu.org/licenses/gpl-2.0.html)
