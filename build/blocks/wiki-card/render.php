@@ -31,6 +31,24 @@ $link    = get_permalink( $post );
 $excerpt = get_the_excerpt( $post );
 $thumb   = $show_thumb ? get_the_post_thumbnail_url( $post_id, 'medium' ) : '';
 
+// Colors must be actual color values — a raw attribute could otherwise
+// smuggle extra declarations into the style attribute.
+$sanitize_color = static function ( string $value ): string {
+	if ( sanitize_hex_color( $value ) ) {
+		return $value;
+	}
+	if ( preg_match( '/^(rgb|rgba|hsl|hsla)\([\d\s.,%\/]+\)$/', $value ) ) {
+		return $value;
+	}
+	if ( preg_match( '/^var\(--[a-zA-Z0-9-]+\)$/', $value ) ) {
+		return $value;
+	}
+	return '';
+};
+
+$bg_color   = $sanitize_color( (string) $bg_color ) ?: '#f0f0f0';
+$text_color = $sanitize_color( (string) $text_color );
+
 $inline_style = 'background-color:' . esc_attr( $bg_color ) . ';';
 if ( $text_color ) {
 	$inline_style .= 'color:' . esc_attr( $text_color ) . ';';
@@ -91,7 +109,7 @@ $wrapper = get_block_wrapper_attributes( [
 
 	<?php if ( $show_link ) : ?>
 		<a class="wiki-card__link" href="<?php echo esc_url( $link ); ?>">
-			<?php esc_html_e( 'Read more', 'wiki-card' ); ?>
+			<?php esc_html_e( 'Read more', 'cns-wiki-suite' ); ?>
 		</a>
 	<?php endif; ?>
 

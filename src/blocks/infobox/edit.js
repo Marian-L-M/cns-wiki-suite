@@ -51,7 +51,7 @@ export default function Edit({ attributes, setAttributes }) {
 		<PanelBody title="Display Settings" initialOpen={true}>
 		  <PanelRow>
 			<SelectControl
-			  label={__("Mobile display", "infobox")}
+			  label={__("Mobile display", "cns-wiki-suite")}
 			  value={attributes.display_mode}
 			  options={[
 				{
@@ -80,7 +80,7 @@ export default function Edit({ attributes, setAttributes }) {
 			  <h1>Test v002</h1>
 			  <fieldset>
 				<legend className="blocks-base-control__label">
-				  {__("Background color", "block-development-examples")}
+				  {__("Background color", "cns-wiki-suite")}
 				</legend>
 				<ColorPalette
 				  value={attributes.bg_color}
@@ -89,7 +89,7 @@ export default function Edit({ attributes, setAttributes }) {
 			  </fieldset>
 			  <fieldset>
 				<legend className="blocks-base-control__label">
-				  {__("Text color", "block-development-examples")}
+				  {__("Text color", "cns-wiki-suite")}
 				</legend>
 				<ColorPalette
 				  value={attributes.text_color}
@@ -98,7 +98,7 @@ export default function Edit({ attributes, setAttributes }) {
 			  </fieldset>
 			  <fieldset>
 				<legend className="blocks-base-control__label">
-				  {__("Contrast color", "block-development-examples")}
+				  {__("Contrast color", "cns-wiki-suite")}
 				</legend>
 				<ColorPalette
 				  value={attributes.contrast_color}

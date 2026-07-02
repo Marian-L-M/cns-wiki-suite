@@ -92,8 +92,8 @@ function cns_wiki_flush_if_needed(): void {
 
 // ── Infobox colour overrides ──────────────────────────────────────────────────
 
-add_action( 'wp_enqueue_scripts',    'cns_wiki_enqueue_infobox_styles' );
-add_action( 'enqueue_block_assets',  'cns_wiki_enqueue_infobox_styles' );
+// enqueue_block_assets fires on both the frontend and in the editor.
+add_action( 'enqueue_block_assets', 'cns_wiki_enqueue_infobox_styles' );
 
 function cns_wiki_enqueue_infobox_styles(): void {
     $bg       = (string) cns_get_wiki_setting( 'infobox_bg_color',       '' );

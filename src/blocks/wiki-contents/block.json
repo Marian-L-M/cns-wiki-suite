@@ -21,7 +21,7 @@
 		"columnGap": { "type": "number", "default": 16 },
 		"rowGap":    { "type": "number", "default": 16 }
 	},
-	"textdomain": "wiki-contents",
+	"textdomain": "cns-wiki-suite",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",

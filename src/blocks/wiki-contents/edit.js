@@ -23,7 +23,7 @@ function GridTabs( { breakpoint, attributes, setAttributes } ) {
 
 	return (
 		<RangeControl
-			label={ __( 'Columns', 'wiki-contents' ) }
+			label={ __( 'Columns', 'cns-wiki-suite' ) }
 			value={ attributes[ columnKey ] }
 			onChange={ ( v ) => setAttributes( { [ columnKey ]: v } ) }
 			min={ 1 }
@@ -49,7 +49,7 @@ function NewestPreviewGrid( { columns, numberOfPosts, columnGap, rowGap } ) {
 				.map( ( _, i ) => (
 					<div key={ i } className="wiki-contents__placeholder-cell">
 						<span className="wiki-contents__placeholder-label">
-							{ __( 'Wiki', 'wiki-contents' ) } { i + 1 }
+							{ __( 'Wiki', 'cns-wiki-suite' ) } { i + 1 }
 						</span>
 					</div>
 				) ) }
@@ -120,20 +120,20 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 	return (
 		<div { ...blockProps }>
 			<InspectorControls>
-				<PanelBody title={ __( 'Display Mode', 'wiki-contents' ) } initialOpen={ true }>
+				<PanelBody title={ __( 'Display Mode', 'cns-wiki-suite' ) } initialOpen={ true }>
 					<RadioControl
 						selected={ mode }
 						options={ [
-							{ label: __( 'Manual selection', 'wiki-contents' ),  value: 'manual' },
-							{ label: __( 'Newest wikis (auto)', 'wiki-contents' ), value: 'newest' },
+							{ label: __( 'Manual selection', 'cns-wiki-suite' ),  value: 'manual' },
+							{ label: __( 'Newest wikis (auto)', 'cns-wiki-suite' ), value: 'newest' },
 						] }
 						onChange={ ( val ) => setAttributes( { mode: val } ) }
 					/>
 				</PanelBody>
 
-				<PanelBody title={ __( 'Grid Settings', 'wiki-contents' ) } initialOpen={ true }>
+				<PanelBody title={ __( 'Grid Settings', 'cns-wiki-suite' ) } initialOpen={ true }>
 					<RangeControl
-						label={ __( 'Number of posts', 'wiki-contents' ) }
+						label={ __( 'Number of posts', 'cns-wiki-suite' ) }
 						value={ numberOfPosts }
 						onChange={ ( v ) => setAttributes( { numberOfPosts: v } ) }
 						min={ 1 }
@@ -143,9 +143,9 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 					/>
 					<TabPanel
 						tabs={ [
-							{ name: 'Mobile',  title: __( 'Mobile',  'wiki-contents' ) },
-							{ name: 'Tablet',  title: __( 'Tablet',  'wiki-contents' ) },
-							{ name: 'Desktop', title: __( 'Desktop', 'wiki-contents' ) },
+							{ name: 'Mobile',  title: __( 'Mobile',  'cns-wiki-suite' ) },
+							{ name: 'Tablet',  title: __( 'Tablet',  'cns-wiki-suite' ) },
+							{ name: 'Desktop', title: __( 'Desktop', 'cns-wiki-suite' ) },
 						] }
 						initialTabName="Desktop"
 					>
@@ -158,7 +158,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 						) }
 					</TabPanel>
 					<RangeControl
-						label={ __( 'Column gap (px)', 'wiki-contents' ) }
+						label={ __( 'Column gap (px)', 'cns-wiki-suite' ) }
 						value={ columnGap }
 						onChange={ ( v ) => setAttributes( { columnGap: v } ) }
 						min={ 0 }
@@ -167,7 +167,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 						__next40pxDefaultSize
 					/>
 					<RangeControl
-						label={ __( 'Row gap (px)', 'wiki-contents' ) }
+						label={ __( 'Row gap (px)', 'cns-wiki-suite' ) }
 						value={ rowGap }
 						onChange={ ( v ) => setAttributes( { rowGap: v } ) }
 						min={ 0 }

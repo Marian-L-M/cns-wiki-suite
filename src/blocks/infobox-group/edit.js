@@ -40,7 +40,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				<PanelBody title="Infobox Group Settings" initialOpen={ true }>
 					<PanelRow>
 						<SelectControl
-							label={ __( 'Dsplay Mode', 'infobox' ) }
+							label={ __( 'Dsplay Mode', 'cns-wiki-suite' ) }
 							value={ attributes.display_mode }
 							options={ [
 								{ label: 'Inherit', value: 'inherit' },
@@ -69,7 +69,7 @@ export default function Edit( { attributes, setAttributes } ) {
 								<legend className="blocks-base-control__label">
 									{ __(
 										'Background color',
-										'block-development-examples'
+										'cns-wiki-suite'
 									) }
 								</legend>
 								<ColorPalette
@@ -81,7 +81,7 @@ export default function Edit( { attributes, setAttributes } ) {
 								<legend className="blocks-base-control__label">
 									{ __(
 										'Text color',
-										'block-development-examples'
+										'cns-wiki-suite'
 									) }
 								</legend>
 								<ColorPalette
@@ -93,7 +93,7 @@ export default function Edit( { attributes, setAttributes } ) {
 								<legend className="blocks-base-control__label">
 									{ __(
 										'Contrast color',
-										'block-development-examples'
+										'cns-wiki-suite'
 									) }
 								</legend>
 								<ColorPalette

@@ -1,5 +1,13 @@
 # CNS Wiki Suite — Improvement Plan
 
+## Status (updated 2026-07-02, second pass)
+
+**Done & verified:** #1 infobox context bug fixed with a v1 block deprecation (existing `data-wp-context="{}"` content stays valid, migrates on save); #2 placeholder `wiki-archive` block removed (no content used it) and `archive-wiki.html` rebuilt as an inherited Query Loop grid with pagination (verified at `/lore/`); #3 manifest/template `file_exists` guards; #4 activation/deactivation hooks (flush) + `uninstall.php`; #5 single `cns-wiki-suite` text domain everywhere (block.json + PHP + JS); #6 `cns_wiki_` prefixes, dead code removed; #7 theme-conditional CPT content template; #8 `newest` mode renders real wiki-card blocks; #9 color validation in wiki-card; #10 single `enqueue_block_assets` hook, empty view.js removed, README updated.
+
+**Deferred:** P3 feature roadmap (taxonomy, infobox presets, related articles, wikilinks, metadata footer, search block).
+
+---
+
 Reviewed: 2026-07-02. This is the smallest and least mature of the three plugins — closer to a scaffold that grew than a designed suite. The settings/rewrite-flush handling in `admin/cns-wiki-admin.php` is genuinely well done; most of the rest needs consolidation. Ordered by priority.
 
 ---

@@ -42,38 +42,14 @@ if ( 'newest' === $mode ) {
 		'no_found_rows'  => true,
 	] );
 
-	ob_start();
-	while ( $query->have_posts() ) {
-		$query->the_post();
-		$pid     = get_the_ID();
-		$title   = get_the_title();
-		$link    = get_permalink();
-		$excerpt = get_the_excerpt();
-		$thumb   = get_the_post_thumbnail_url( $pid, 'medium' );
-		?>
-		<div class="wiki-card">
-			<?php if ( $thumb ) : ?>
-				<div class="wiki-card__thumbnail">
-					<img
-						src="<?php echo esc_url( $thumb ); ?>"
-						alt="<?php echo esc_attr( $title ); ?>"
-						loading="lazy"
-					>
-				</div>
-			<?php endif; ?>
-			<h3 class="wiki-card__title"><?php echo esc_html( $title ); ?></h3>
-			<?php if ( $excerpt ) : ?>
-				<div class="wiki-card__excerpt"><?php echo wp_kses_post( $excerpt ); ?></div>
-			<?php endif; ?>
-			<a class="wiki-card__link" href="<?php echo esc_url( $link ); ?>">
-				<?php esc_html_e( 'Read more', 'wiki-contents' ); ?>
-			</a>
-		</div>
-		<?php
+	// Render actual wiki-card blocks so the card markup has a single source.
+	$inner = '';
+	foreach ( $query->posts as $wiki_post ) {
+		$inner .= render_block( [
+			'blockName' => 'cns-wiki-suite/wiki-card',
+			'attrs'     => [ 'postId' => $wiki_post->ID ],
+		] );
 	}
-	wp_reset_postdata();
-
-	$inner = ob_get_clean();
 } else {
 	$inner = $content;
 }

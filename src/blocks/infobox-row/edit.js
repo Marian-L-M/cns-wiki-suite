@@ -86,12 +86,12 @@ export default function Edit({ attributes, setAttributes }) {
 	<div {...useBlockProps()}>
 	  <InspectorControls>
 		<PanelBody
-		  title={__("Infobox Row Settings", "infobox-row")}
+		  title={__("Infobox Row Settings", "cns-wiki-suite")}
 		  initialOpen={true}
 		>
 		  <PanelRow>
 			{/* <SelectControl
-			  label={__("Display Mode", "infobox-row")}
+			  label={__("Display Mode", "cns-wiki-suite")}
 			  value={mode}
 			  options={MODES}
 			  onChange={(value) => setAttributes({ mode: value })}
@@ -104,49 +104,49 @@ export default function Edit({ attributes, setAttributes }) {
 		<Modal
 		  title={
 			editingIndex !== null
-			  ? __("Edit Item", "infobox-row")
-			  : __("Add Item", "infobox-row")
+			  ? __("Edit Item", "cns-wiki-suite")
+			  : __("Add Item", "cns-wiki-suite")
 		  }
 		  onRequestClose={closeModal}
 		  className="infobox-row__modal"
 		>
 		  <TextControl
-			label={__("Title", "infobox-row")}
+			label={__("Title", "cns-wiki-suite")}
 			value={draft.title}
 			onChange={(value) =>
 			  setDraft((prev) => ({ ...prev, title: value }))
 			}
 		  />
 		  <TextareaControl
-			label={__("Description", "infobox-row")}
+			label={__("Description", "cns-wiki-suite")}
 			value={draft.text}
 			onChange={(value) => setDraft((prev) => ({ ...prev, text: value }))}
 			rows={4}
 		  />
 		  <div className="infobox-row__url-field">
 			<label className="components-base-control__label">
-			  {__("Search post or add url", "infobox-row")}
+			  {__("Search post or add url", "cns-wiki-suite")}
 			</label>
 			<URLInput
 			  value={draft.linkUrl}
 			  onChange={(url) =>
 				setDraft((prev) => ({ ...prev, linkUrl: url }))
 			  }
-			  placeholder={__("Search pages or paste URL…", "infobox-row")}
+			  placeholder={__("Search pages or paste URL…", "cns-wiki-suite")}
 			/>
 		  </div>
 		  {draft.linkUrl && (
 			<>
 			  <TextControl
-				label={__("Link text", "infobox-row")}
+				label={__("Link text", "cns-wiki-suite")}
 				value={draft.linkText}
 				onChange={(value) =>
 				  setDraft((prev) => ({ ...prev, linkText: value }))
 				}
-				placeholder={__("Defaults to URL if empty", "infobox-row")}
+				placeholder={__("Defaults to URL if empty", "cns-wiki-suite")}
 			  />
 			  <ToggleControl
-				label={__("Open in new tab", "infobox-row")}
+				label={__("Open in new tab", "cns-wiki-suite")}
 				checked={draft.linkNewTab}
 				onChange={(value) =>
 				  setDraft((prev) => ({ ...prev, linkNewTab: value }))
@@ -156,10 +156,10 @@ export default function Edit({ attributes, setAttributes }) {
 		  )}
 		  <div className="infobox-row__modal-actions">
 			<Button variant="primary" onClick={saveItem}>
-			  {__("Save", "infobox-row")}
+			  {__("Save", "cns-wiki-suite")}
 			</Button>
 			<Button variant="secondary" onClick={closeModal}>
-			  {__("Cancel", "infobox-row")}
+			  {__("Cancel", "cns-wiki-suite")}
 			</Button>
 		  </div>
 		</Modal>
@@ -168,12 +168,12 @@ export default function Edit({ attributes, setAttributes }) {
 	  <dl className="infobox-row__list">
 		{items.length === 0 && (
 		  <p className="infobox-row__empty">
-			{__("Add info item below", "infobox-row")}
+			{__("Add info item below", "cns-wiki-suite")}
 		  </p>
 		)}
 		{items.map((item, index) => (
 		  <div key={item.id} className="infobox-row__item">
-			<dt>{item.dt || <em>{__("(empty term)", "infobox-row")}</em>}</dt>
+			<dt>{item.dt || <em>{__("(empty term)", "cns-wiki-suite")}</em>}</dt>
 			<dd>
 			  <span>
 				{item.ddText}

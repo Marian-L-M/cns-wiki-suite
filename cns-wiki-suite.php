@@ -17,30 +17,44 @@
 if (! defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
+
+define('CNS_WIKI_SUITE_DIR', plugin_dir_path(__FILE__));
+
 /**
- * Registers the block(s) metadata from the `blocks-manifest.php` and registers the block type(s)
- * based on the registered block metadata. Behind the scenes, it registers also all assets so they can be enqueued
- * through the block editor in the corresponding context.
+ * Registers all blocks from the build manifest.
  *
  * @see https://make.wordpress.org/core/2025/03/13/more-efficient-block-type-registration-in-6-8/
- * @see https://make.wordpress.org/core/2024/10/17/new-block-type-registration-apis-to-improve-performance-in-wordpress-6-7/
  */
-
-// Reference
-// https://developer.wordpress.org/news/2024/09/how-to-build-a-multi-block-plugin/
-function create_block_cns_wiki_suite_block_init()
+function cns_wiki_register_blocks(): void
 {
-	wp_register_block_types_from_metadata_collection(__DIR__ . '/build/blocks', __DIR__ . '/build/blocks-manifest.php');
+	if (file_exists(__DIR__ . '/build/blocks-manifest.php')) {
+		wp_register_block_types_from_metadata_collection(__DIR__ . '/build/blocks', __DIR__ . '/build/blocks-manifest.php');
+	} elseif (defined('WP_DEBUG') && WP_DEBUG) {
+		trigger_error('CNS Wiki Suite: block manifest not found — run `npm run build` in the plugin directory.', E_USER_NOTICE);
+	}
 }
-add_action('init', 'create_block_cns_wiki_suite_block_init');
-
+add_action('init', 'cns_wiki_register_blocks');
 
 // Setup wiki post type
 require __DIR__ . '/wiki/setup.php';
 
 // CNS theme admin panel integration
 require __DIR__ . '/admin/cns-wiki-admin.php';
-// class cnsWikiSuite
-// {
-// 	function __construct() {}
-// }
+
+// ── Lifecycle hooks ───────────────────────────────────────────────────────────
+
+function cns_wiki_suite_activate(): void
+{
+	cns_wiki_register_post_type();
+	flush_rewrite_rules();
+}
+register_activation_hook(__FILE__, 'cns_wiki_suite_activate');
+
+function cns_wiki_suite_deactivate(): void
+{
+	if (post_type_exists('wiki')) {
+		unregister_post_type('wiki');
+	}
+	flush_rewrite_rules();
+}
+register_deactivation_hook(__FILE__, 'cns_wiki_suite_deactivate');

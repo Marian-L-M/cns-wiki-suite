@@ -34,10 +34,12 @@ CNS Wiki Suite adds blocks and tooling to help writers, fans, and world-builders
 | Block | Description |
 |---|---|
 | `wiki-card` | Displays a linked card for a wiki post with thumbnail, title, categories, tags, and excerpt |
-| `wiki-contents` | Grid of wiki cards — manual (inner blocks) or automatic (newest N posts) |
-| `infobox` | Key/value infobox row |
-| `infobox-row` | Horizontal group of infoboxes |
-| `infobox-group` | Collapsible container for infobox rows |
+| `wiki-contents` | Grid of wiki cards — manual (inner blocks) or automatic (newest N posts, rendered as `wiki-card` blocks) |
+| `infobox` | Collapsible per-article infobox container (Interactivity API) |
+| `infobox-group` | Collapsible section inside an infobox |
+| `infobox-row` | Key/value row inside an infobox |
+
+All blocks and PHP strings use the `cns-wiki-suite` text domain; PHP functions are prefixed `cns_wiki_`. Settings live in the `cns_wiki_settings` option (read via `cns_get_wiki_setting()`); uninstalling deletes the options but keeps wiki posts.
 
 ---
 

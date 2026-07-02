@@ -30,17 +30,17 @@ function PostSelectorModal( { currentPostType, onSelect, onClose } ) {
 
 	return (
 		<Modal
-			title={ __( 'Select a post', 'wiki-card' ) }
+			title={ __( 'Select a post', 'cns-wiki-suite' ) }
 			onRequestClose={ onClose }
 			className="wiki-card-modal"
 		>
 			<SelectControl
-				label={ __( 'Post type', 'wiki-card' ) }
+				label={ __( 'Post type', 'cns-wiki-suite' ) }
 				value={ postType }
 				options={ [
-					{ label: __( 'Wiki', 'wiki-card' ), value: 'wiki' },
-					{ label: __( 'Post', 'wiki-card' ), value: 'post' },
-					{ label: __( 'Page', 'wiki-card' ), value: 'page' },
+					{ label: __( 'Wiki', 'cns-wiki-suite' ), value: 'wiki' },
+					{ label: __( 'Post', 'cns-wiki-suite' ), value: 'post' },
+					{ label: __( 'Page', 'cns-wiki-suite' ), value: 'page' },
 				] }
 				onChange={ setPostType }
 				__next40pxDefaultSize
@@ -48,14 +48,14 @@ function PostSelectorModal( { currentPostType, onSelect, onClose } ) {
 			<SearchControl
 				value={ search }
 				onChange={ setSearch }
-				placeholder={ __( 'Search…', 'wiki-card' ) }
+				placeholder={ __( 'Search…', 'cns-wiki-suite' ) }
 				__next40pxDefaultSize
 			/>
 			<div className="wiki-card-modal__results">
 				{ isResolving && <Spinner /> }
 				{ ! isResolving && records?.length === 0 && (
 					<p className="wiki-card-modal__empty">
-						{ __( 'No posts found.', 'wiki-card' ) }
+						{ __( 'No posts found.', 'cns-wiki-suite' ) }
 					</p>
 				) }
 				{ records?.map( ( post ) => (
@@ -161,7 +161,7 @@ function CardPreview( { postId, postType, attributes } ) {
 			) }
 			{ showLink && (
 				<span className="wiki-card__link">
-					{ __( 'Read more', 'wiki-card' ) }
+					{ __( 'Read more', 'cns-wiki-suite' ) }
 				</span>
 			) }
 		</div>
@@ -192,49 +192,49 @@ export default function Edit( { attributes, setAttributes } ) {
 	return (
 		<div { ...useBlockProps() }>
 			<InspectorControls>
-				<PanelBody title={ __( 'Card Settings', 'wiki-card' ) } initialOpen={ true }>
+				<PanelBody title={ __( 'Card Settings', 'cns-wiki-suite' ) } initialOpen={ true }>
 					<ToggleControl
-						label={ __( 'Show thumbnail', 'wiki-card' ) }
+						label={ __( 'Show thumbnail', 'cns-wiki-suite' ) }
 						checked={ showThumbnail }
 						onChange={ ( val ) => setAttributes( { showThumbnail: val } ) }
 						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
-						label={ __( 'Show title', 'wiki-card' ) }
+						label={ __( 'Show title', 'cns-wiki-suite' ) }
 						checked={ showTitle }
 						onChange={ ( val ) => setAttributes( { showTitle: val } ) }
 						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
-						label={ __( 'Show categories', 'wiki-card' ) }
+						label={ __( 'Show categories', 'cns-wiki-suite' ) }
 						checked={ showCategories }
 						onChange={ ( val ) => setAttributes( { showCategories: val } ) }
 						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
-						label={ __( 'Show excerpt', 'wiki-card' ) }
+						label={ __( 'Show excerpt', 'cns-wiki-suite' ) }
 						checked={ showExcerpt }
 						onChange={ ( val ) => setAttributes( { showExcerpt: val } ) }
 						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
-						label={ __( 'Show tags', 'wiki-card' ) }
+						label={ __( 'Show tags', 'cns-wiki-suite' ) }
 						checked={ showTags }
 						onChange={ ( val ) => setAttributes( { showTags: val } ) }
 						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
-						label={ __( 'Show read more link', 'wiki-card' ) }
+						label={ __( 'Show read more link', 'cns-wiki-suite' ) }
 						checked={ showLink }
 						onChange={ ( val ) => setAttributes( { showLink: val } ) }
 						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
-				<PanelBody title={ __( 'Color', 'wiki-card' ) } initialOpen={ false }>
+				<PanelBody title={ __( 'Color', 'cns-wiki-suite' ) } initialOpen={ false }>
 					<PanelRow>
 						<fieldset style={ { width: '100%' } }>
 							<legend className="blocks-base-control__label">
-								{ __( 'Background color', 'wiki-card' ) }
+								{ __( 'Background color', 'cns-wiki-suite' ) }
 							</legend>
 							<ColorPalette
 								value={ backgroundColor }
@@ -247,7 +247,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					<PanelRow>
 						<fieldset style={ { width: '100%' } }>
 							<legend className="blocks-base-control__label">
-								{ __( 'Text color', 'wiki-card' ) }
+								{ __( 'Text color', 'cns-wiki-suite' ) }
 							</legend>
 							<ColorPalette
 								value={ textColor }
@@ -259,13 +259,13 @@ export default function Edit( { attributes, setAttributes } ) {
 					</PanelRow>
 				</PanelBody>
 				{ postId > 0 && (
-					<PanelBody title={ __( 'Post', 'wiki-card' ) } initialOpen={ false }>
+					<PanelBody title={ __( 'Post', 'cns-wiki-suite' ) } initialOpen={ false }>
 						<PanelRow>
 							<Button
 								variant="secondary"
 								onClick={ () => setIsModalOpen( true ) }
 							>
-								{ __( 'Change post', 'wiki-card' ) }
+								{ __( 'Change post', 'cns-wiki-suite' ) }
 							</Button>
 						</PanelRow>
 					</PanelBody>
@@ -283,11 +283,11 @@ export default function Edit( { attributes, setAttributes } ) {
 			{ postId === 0 ? (
 				<Placeholder
 					icon="index-card"
-					label={ __( 'Wiki Card', 'wiki-card' ) }
-					instructions={ __( 'Select a post to display as a card.', 'wiki-card' ) }
+					label={ __( 'Wiki Card', 'cns-wiki-suite' ) }
+					instructions={ __( 'Select a post to display as a card.', 'cns-wiki-suite' ) }
 				>
 					<Button variant="primary" onClick={ () => setIsModalOpen( true ) }>
-						{ __( 'Select post', 'wiki-card' ) }
+						{ __( 'Select post', 'cns-wiki-suite' ) }
 					</Button>
 				</Placeholder>
 			) : (

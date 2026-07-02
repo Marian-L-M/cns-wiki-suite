@@ -54,7 +54,7 @@ return array(
 			'core/list',
 			'core/image'
 		),
-		'textdomain' => 'infobox',
+		'textdomain' => 'cns-wiki-suite',
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',
@@ -103,7 +103,7 @@ return array(
 				'default' => 'inherit'
 			)
 		),
-		'textdomain' => 'infobox',
+		'textdomain' => 'cns-wiki-suite',
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',
@@ -139,33 +139,10 @@ return array(
 				)
 			)
 		),
-		'textdomain' => 'infobox',
+		'textdomain' => 'cns-wiki-suite',
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
-		'style' => 'file:./style-index.css',
-		'viewScriptModule' => 'file:./view.js'
-	),
-	'wiki-archive' => array(
-		'$schema' => 'https://schemas.wp.org/trunk/block.json',
-		'apiVersion' => 3,
-		'name' => 'cns-wiki-suite/wiki-archive',
-		'version' => '0.1.0',
-		'title' => 'Wiki Archive',
-		'category' => 'widgets',
-		'icon' => 'smiley',
-		'description' => 'Example block scaffolded with Create Block tool.',
-		'example' => array(
-			
-		),
-		'supports' => array(
-			'html' => false
-		),
-		'textdomain' => 'wiki-archive',
-		'editorScript' => 'file:./index.js',
-		'editorStyle' => 'file:./index.css',
-		'style' => 'file:./style-index.css',
-		'render' => 'file:./render.php',
-		'viewScript' => 'file:./view.js'
+		'style' => 'file:./style-index.css'
 	),
 	'wiki-card' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
@@ -224,7 +201,7 @@ return array(
 				'default' => true
 			)
 		),
-		'textdomain' => 'wiki-card',
+		'textdomain' => 'cns-wiki-suite',
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',
@@ -278,7 +255,7 @@ return array(
 				'default' => 16
 			)
 		),
-		'textdomain' => 'wiki-contents',
+		'textdomain' => 'cns-wiki-suite',
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',

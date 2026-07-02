@@ -17,7 +17,7 @@ export default function save({ attributes }) {
     <div
       {...useBlockProps.save()}
       data-wp-interactive="cns-wiki-suite/infobox"
-      data-wp-context={JSON.stringify({ isActive: is_infobox_open })}
+      data-wp-context={JSON.stringify({ isActive: is_infobox_open() })}
       style={{ backgroundColor: bg_color, color: text_color }}
     >
       <div
