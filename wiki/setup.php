@@ -44,7 +44,7 @@ function cns_post_tax_init()
         'show_ui'            => true,
         'show_in_menu'       => true,
         'query_var'          => true,
-        'rewrite'            => ['slug' => 'wiki'],
+        'rewrite'            => ['slug' => cns_get_wiki_setting( 'archive_slug', 'wiki' )],
         'capability_type'    => 'post',
         'has_archive'        => true,
         'hierarchical'       => false,

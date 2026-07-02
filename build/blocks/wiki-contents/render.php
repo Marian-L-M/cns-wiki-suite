@@ -8,12 +8,12 @@
  */
 
 $mode            = $attributes['mode']           ?? 'manual';
-$columns_mobile  = intval( $attributes['columnsMobile']  ?? 1 );
-$columns_tablet  = intval( $attributes['columnsTablet']  ?? 2 );
-$columns_desktop = intval( $attributes['columnsDesktop'] ?? 3 );
-$number_of_posts = intval( $attributes['numberOfPosts'] ?? $columns_desktop );
-$column_gap      = intval( $attributes['columnGap'] ?? 16 );
-$row_gap         = intval( $attributes['rowGap']    ?? 16 );
+$columns_mobile  = intval( $attributes['columnsMobile']  ?? cns_get_wiki_setting( 'grid_columns_mobile',  1 ) );
+$columns_tablet  = intval( $attributes['columnsTablet']  ?? cns_get_wiki_setting( 'grid_columns_tablet',  2 ) );
+$columns_desktop = intval( $attributes['columnsDesktop'] ?? cns_get_wiki_setting( 'grid_columns_desktop', 3 ) );
+$number_of_posts = intval( $attributes['numberOfPosts']  ?? $columns_desktop );
+$column_gap      = intval( $attributes['columnGap'] ?? cns_get_wiki_setting( 'grid_column_gap', 16 ) );
+$row_gap         = intval( $attributes['rowGap']    ?? cns_get_wiki_setting( 'grid_row_gap',    16 ) );
 
 // CSS custom properties drive the responsive grid via style.scss media queries.
 $grid_vars = sprintf(
