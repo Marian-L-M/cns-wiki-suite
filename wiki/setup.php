@@ -11,18 +11,19 @@ defined('ABSPATH') || exit;
 /**
  * Default content template for new wiki posts.
  *
- * On the Clouds and Spaceships theme this is the rich three-column layout
- * using the theme's section/tab blocks and sidebar template part. On any
- * other theme it degrades to a plain columns skeleton so new posts are
+ * This is the *editable* portion of a wiki article only: the center content
+ * column (section/tabs) and the per-post infobox column. The surrounding page
+ * chrome — the left navigation sidebar and the outer layout wrapper — lives in
+ * the single-wiki.html block template, so it renders on the front end without
+ * appearing in the post editor (matching how normal posts behave).
+ *
+ * On the Clouds and Spaceships theme this uses the theme's section/tab blocks.
+ * On any other theme it degrades to a plain columns skeleton so new posts are
  * never born with unknown blocks.
  */
 function cns_wiki_post_content_template(): array
 {
     $is_cns_theme = get_template() === 'clouds-and-spaceships';
-
-    $left_column = $is_cns_theme
-        ? [['core/template-part', ['slug' => 'sidebar']]]
-        : [['core/paragraph', ['placeholder' => __('Optional sidebar content…', 'cns-wiki-suite')]]];
 
     $center_column = $is_cns_theme
         ? [
@@ -52,21 +53,12 @@ function cns_wiki_post_content_template(): array
         [
             'core/columns',
             [
-                'className'    => 'cns-col__wrapper',
+                'className'    => 'cns-col__inner-wrapper',
+                'isStackedOnMobile' => true,
                 'lock'         => ['move' => true, 'remove' => true],
                 'templateLock' => 'all',
             ],
             [
-                // Left column — sidebar navigation
-                [
-                    'core/column',
-                    [
-                        'className'    => 'cns-col cns-col__side cns-col__left cns-col__sidebar',
-                        'lock'         => ['move' => true, 'remove' => true],
-                        'templateLock' => false,
-                    ],
-                    $left_column,
-                ],
                 // Center column — content
                 [
                     'core/column',
