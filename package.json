@@ -21,7 +21,8 @@
 		"@wordpress/core-data": "latest",
 		"@wordpress/data": "latest",
 		"@wordpress/element": "latest",
-		"@wordpress/i18n": "latest"
+		"@wordpress/i18n": "latest",
+		"@wordpress/icons": "^12.1.0"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^31.8.0"

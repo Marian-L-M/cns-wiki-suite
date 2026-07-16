@@ -1,8 +1,11 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	InspectorControls,
+	PanelColorSettings,
+} from '@wordpress/block-editor';
 import {
 	Button,
-	ColorPalette,
 	Modal,
 	PanelBody,
 	PanelRow,
@@ -230,34 +233,24 @@ export default function Edit( { attributes, setAttributes } ) {
 						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
-				<PanelBody title={ __( 'Color', 'cns-wiki-suite' ) } initialOpen={ false }>
-					<PanelRow>
-						<fieldset style={ { width: '100%' } }>
-							<legend className="blocks-base-control__label">
-								{ __( 'Background color', 'cns-wiki-suite' ) }
-							</legend>
-							<ColorPalette
-								value={ backgroundColor }
-								onChange={ ( val ) =>
-									setAttributes( { backgroundColor: val ?? '#f0f0f0' } )
-								}
-							/>
-						</fieldset>
-					</PanelRow>
-					<PanelRow>
-						<fieldset style={ { width: '100%' } }>
-							<legend className="blocks-base-control__label">
-								{ __( 'Text color', 'cns-wiki-suite' ) }
-							</legend>
-							<ColorPalette
-								value={ textColor }
-								onChange={ ( val ) =>
-									setAttributes( { textColor: val ?? '' } )
-								}
-							/>
-						</fieldset>
-					</PanelRow>
-				</PanelBody>
+				<PanelColorSettings
+					title={ __( 'Color', 'cns-wiki-suite' ) }
+					initialOpen={ false }
+					colorSettings={ [
+						{
+							value: backgroundColor,
+							onChange: ( val ) =>
+								setAttributes( { backgroundColor: val ?? '#f0f0f0' } ),
+							label: __( 'Background color', 'cns-wiki-suite' ),
+						},
+						{
+							value: textColor,
+							onChange: ( val ) =>
+								setAttributes( { textColor: val ?? '' } ),
+							label: __( 'Text color', 'cns-wiki-suite' ),
+						},
+					] }
+				/>
 				{ postId > 0 && (
 					<PanelBody title={ __( 'Post', 'cns-wiki-suite' ) } initialOpen={ false }>
 						<PanelRow>

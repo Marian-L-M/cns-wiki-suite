@@ -3,7 +3,7 @@ import {
   useBlockProps,
   InnerBlocks,
   InspectorControls,
-  ColorPalette,
+  PanelColorSettings,
 } from "@wordpress/block-editor";
 import {
   SelectControl,
@@ -14,18 +14,7 @@ import {
 import "./editor.scss";
 
 export default function Edit({ attributes, setAttributes }) {
-  const { bg_color, text_color, contrast_color, display_mode } = attributes;
-
-  const onChangeBGColor = (hexColor) => {
-	setAttributes({ bg_color: hexColor });
-  };
-
-  const onChangeTextColor = (hexColor) => {
-	setAttributes({ text_color: hexColor });
-  };
-  const onChangeContrastColor = (hexColor) => {
-	setAttributes({ contrast_color: hexColor });
-  };
+  const { bg_color, text_color, contrast_color } = attributes;
 
   function updateInfoboxTitle(value) {
 	setAttributes({ infobox_title: value });
@@ -74,40 +63,27 @@ export default function Edit({ attributes, setAttributes }) {
 			/>
 		  </PanelRow>
 		</PanelBody>
-		<PanelBody title="Color Settings" initialOpen={false}>
-		  <PanelRow>
-			<div>
-			  <h1>Test v002</h1>
-			  <fieldset>
-				<legend className="blocks-base-control__label">
-				  {__("Background color", "cns-wiki-suite")}
-				</legend>
-				<ColorPalette
-				  value={attributes.bg_color}
-				  onChange={onChangeBGColor}
-				/>
-			  </fieldset>
-			  <fieldset>
-				<legend className="blocks-base-control__label">
-				  {__("Text color", "cns-wiki-suite")}
-				</legend>
-				<ColorPalette
-				  value={attributes.text_color}
-				  onChange={onChangeTextColor}
-				/>
-			  </fieldset>
-			  <fieldset>
-				<legend className="blocks-base-control__label">
-				  {__("Contrast color", "cns-wiki-suite")}
-				</legend>
-				<ColorPalette
-				  value={attributes.contrast_color}
-				  onChange={onChangeContrastColor}
-				/>
-			  </fieldset>
-			</div>
-		  </PanelRow>
-		</PanelBody>
+		<PanelColorSettings
+		  title={__("Color Settings", "cns-wiki-suite")}
+		  initialOpen={false}
+		  colorSettings={[
+			{
+			  value: bg_color,
+			  onChange: (value) => setAttributes({ bg_color: value }),
+			  label: __("Background color", "cns-wiki-suite"),
+			},
+			{
+			  value: text_color,
+			  onChange: (value) => setAttributes({ text_color: value }),
+			  label: __("Text color", "cns-wiki-suite"),
+			},
+			{
+			  value: contrast_color,
+			  onChange: (value) => setAttributes({ contrast_color: value }),
+			  label: __("Contrast color", "cns-wiki-suite"),
+			},
+		  ]}
+		/>
 	  </InspectorControls>
 	  <div className="infobox">
 		<h2
