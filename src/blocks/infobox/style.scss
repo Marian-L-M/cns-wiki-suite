@@ -14,7 +14,7 @@
 .infobox {
 	border: 1px solid #dedede;
 	padding: 2rem 1em;
-	margin-top: 2rem;
+	margin-bottom: 2rem;
 	&__content {
 		position: relative;
 		z-index: 2;
@@ -36,6 +36,7 @@
 	h2 {
 		padding-top: 0.2em;
 		padding-bottom: 0.2em;
+		margin: 0;
 	}
 	h2,
 	h2 button {

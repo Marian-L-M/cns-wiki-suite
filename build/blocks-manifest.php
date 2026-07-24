@@ -113,7 +113,7 @@ return array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'cns-wiki-suite/infobox-row',
-		'parent' => array(
+		'ancestor' => array(
 			'cns-wiki-suite/infobox'
 		),
 		'version' => '0.1.0',

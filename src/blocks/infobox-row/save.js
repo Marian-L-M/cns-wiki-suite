@@ -20,9 +20,14 @@ function renderLink( item ) {
 export default function save( { attributes } ) {
 	const { mode, items } = attributes;
 
+	// Render in the author-defined order; ties keep insertion order (stable sort).
+	const orderedItems = [ ...items ].sort(
+		( a, b ) => ( a.order ?? 0 ) - ( b.order ?? 0 )
+	);
+
 	const renderDatalist = () => (
 		<dl className="infobox-row__list">
-			{ items.map( ( item ) => (
+			{ orderedItems.map( ( item ) => (
 				<div key={ item.id } className="infobox-row__item">
 					<dt>{ item.dt }</dt>
 					<dd>
@@ -37,7 +42,7 @@ export default function save( { attributes } ) {
 	const renderTable = () => (
 		<table className="infobox-row__table">
 			<tbody>
-				{ items.map( ( item ) => (
+				{ orderedItems.map( ( item ) => (
 					<tr key={ item.id }>
 						<th scope="row">{ item.dt }</th>
 						<td>

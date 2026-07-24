@@ -127,7 +127,7 @@ function cns_wiki_register_post_type()
         'has_archive'        => true,
         'hierarchical'       => false,
         'menu_position'      => 20,
-        'supports'           => ['title', 'editor', 'author', 'thumbnail', 'excerpt'],
+        'supports'           => ['title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments'],
         'taxonomies'         => ['category', 'post_tag'],
         'show_in_rest'       => true,
         'template'           => cns_wiki_post_content_template(),

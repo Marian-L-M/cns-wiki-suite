@@ -14,6 +14,7 @@ import {
   TextControl,
   TextareaControl,
   ToggleControl,
+  __experimentalNumberControl as NumberControl,
 } from "@wordpress/components";
 import { pencil, trash } from "@wordpress/icons";
 import "./editor.scss";
@@ -33,8 +34,13 @@ export default function Edit({ attributes, setAttributes }) {
   const [editingIndex, setEditingIndex] = useState(null);
   const [draft, setDraft] = useState(DRAFT_DEFAULTS);
 
+  // New items land at the end of the current order sequence.
+  const nextOrder = items.length
+	? Math.max(...items.map((item) => item.order ?? 0)) + 1
+	: 1;
+
   function openAddModal() {
-	setDraft(DRAFT_DEFAULTS);
+	setDraft({ ...DRAFT_DEFAULTS, order: nextOrder });
 	setEditingIndex(null);
 	setIsModalOpen(true);
   }
@@ -124,6 +130,22 @@ export default function Edit({ attributes, setAttributes }) {
 			onChange={(value) => setDraft((prev) => ({ ...prev, text: value }))}
 			rows={4}
 		  />
+		  <NumberControl
+			label={__("Order", "cns-wiki-suite")}
+			help={__(
+			  "Lower numbers appear first in the list.",
+			  "cns-wiki-suite"
+			)}
+			value={draft.order}
+			min={0}
+			onChange={(value) => {
+			  const parsed = parseInt(value, 10);
+			  setDraft((prev) => ({
+				...prev,
+				order: Number.isFinite(parsed) ? parsed : 0,
+			  }));
+			}}
+		  />
 		  <div className="infobox-row__url-field">
 			<label className="components-base-control__label">
 			  {__("Search post or add url", "cns-wiki-suite")}
@@ -172,7 +194,10 @@ export default function Edit({ attributes, setAttributes }) {
 			{__("Add info item below", "cns-wiki-suite")}
 		  </p>
 		)}
-		{items.map((item, index) => (
+		{items
+		  .map((item, index) => ({ item, index }))
+		  .sort((a, b) => (a.item.order ?? 0) - (b.item.order ?? 0))
+		  .map(({ item, index }) => (
 		  <div key={item.id} className="infobox-row__item">
 			<dt>{item.dt || <em>{__("(empty term)", "cns-wiki-suite")}</em>}</dt>
 			<dd>
