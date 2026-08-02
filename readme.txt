@@ -1,5 +1,5 @@
 === CNS Wiki Suite ===
-Contributors: marianmaschke
+Contributors: namatamagodev
 Tags: wiki, glossary, blocks, block-theme
 Requires at least: 6.8
 Tested up to: 6.8
