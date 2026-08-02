@@ -38,6 +38,16 @@ CNS Wiki Suite adds blocks and tooling to help writers, fans, and world-builders
 | `infobox` | Collapsible per-article infobox container (Interactivity API) |
 | `infobox-group` | Collapsible section inside an infobox |
 | `infobox-row` | Key/value row inside an infobox |
+| `glossary-index` | Lists all glossary entries grouped alphabetically (shared 0–9 & symbols section) or by glossary category |
+
+## Glossary
+
+Opt-in via **CNS → Wiki → Glossary** (enable toggle, archive URL slug, entry text colour). When enabled:
+
+- A **Glossary** post type (classic editor, thumbnails, excerpt) with its own `glossary_category` taxonomy appears in the admin menu.
+- The archive at `/<slug>/` renders the `archive-glossary.html` template containing the `glossary-index` block.
+- A **Glossary term** button appears in the rich-text toolbar (More menu) of any block editor. Highlight text, pick an entry — the text becomes a link to the definition with a hover tooltip.
+- Tooltips and hrefs are refreshed server-side on render from `data-glossary-id` (see `glossary/setup.php`), so they never go stale; terms pointing at deleted entries degrade to plain text.
 
 All blocks and PHP strings use the `cns-wiki-suite` text domain; PHP functions are prefixed `cns_wiki_`. Settings live in the `cns_wiki_settings` option (read via `cns_get_wiki_setting()`); uninstalling deletes the options but keeps wiki posts.
 
@@ -82,6 +92,10 @@ cns-wiki-suite/
   build/blocks/            — compiled block assets
   wiki/
     setup.php              — wiki post type registration
+  glossary/
+    setup.php              — glossary post type, taxonomy, term rendering
+  src/formats/glossary/    — inline glossary-term rich-text format
+  assets/css/              — static frontend styles (glossary term/tooltip)
   templates/               — block theme templates
 ```
 

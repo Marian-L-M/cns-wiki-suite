@@ -1,0 +1,27 @@
+/*!*************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/glossary-index/style.scss ***!
+  \*************************************************************************************************************************************************************************************************************************************************************/
+.cns-glossary-index__section {
+  margin-bottom: 2rem;
+}
+.cns-glossary-index__title {
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid currentColor;
+}
+.cns-glossary-index__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.25rem 1.5rem;
+}
+.cns-glossary-index__item a {
+  text-decoration: none;
+}
+.cns-glossary-index__item a:hover, .cns-glossary-index__item a:focus-visible {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=style-index.css.map*/

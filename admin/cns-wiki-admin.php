@@ -56,6 +56,14 @@ function cns_sanitize_wiki_settings( $input ): array {
     $output['infobox_contrast_color'] = sanitize_hex_color( $input['infobox_contrast_color'] ?? '' ) ?? '';
     $output['infobox_border_color']   = sanitize_hex_color( $input['infobox_border_color']   ?? '' ) ?? '';
 
+    // Glossary
+    $output['glossary_enabled'] = ! empty( $input['glossary_enabled'] );
+
+    $raw_glossary_slug        = preg_replace( '/[^a-z0-9\-]/', '', strtolower( $input['glossary_slug'] ?? 'glossary' ) );
+    $output['glossary_slug']  = $raw_glossary_slug ?: 'glossary';
+
+    $output['glossary_text_color'] = sanitize_hex_color( $input['glossary_text_color'] ?? '' ) ?? '';
+
     return $output;
 }
 
@@ -69,8 +77,16 @@ function cns_sanitize_wiki_settings( $input ): array {
 add_action( 'update_option_cns_wiki_settings', 'cns_wiki_schedule_rewrite_flush', 10, 2 );
 
 function cns_wiki_schedule_rewrite_flush( $old_value, $new_value ): void {
-    if ( ( $old_value['archive_slug'] ?? 'wiki' ) !== ( $new_value['archive_slug'] ?? 'wiki' ) ) {
-        update_option( 'cns_wiki_needs_flush', true );
+    $watched = [
+        [ 'archive_slug',     'wiki' ],
+        [ 'glossary_slug',    'glossary' ],
+        [ 'glossary_enabled', false ],
+    ];
+    foreach ( $watched as [ $key, $default ] ) {
+        if ( ( $old_value[ $key ] ?? $default ) !== ( $new_value[ $key ] ?? $default ) ) {
+            update_option( 'cns_wiki_needs_flush', true );
+            return;
+        }
     }
 }
 

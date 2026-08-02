@@ -20,6 +20,11 @@ $infobox_bg       = cns_get_wiki_setting( 'infobox_bg_color',       '' );
 $infobox_contrast = cns_get_wiki_setting( 'infobox_contrast_color', '' );
 $infobox_border   = cns_get_wiki_setting( 'infobox_border_color',   '' );
 
+$glossary_enabled = (bool) cns_get_wiki_setting( 'glossary_enabled', false );
+$glossary_slug    = cns_get_wiki_setting( 'glossary_slug', 'glossary' );
+$glossary_color   = cns_get_wiki_setting( 'glossary_text_color', '' );
+$glossary_url     = $glossary_enabled ? get_post_type_archive_link( 'glossary' ) : false;
+
 $order_options = [
     'date_desc' => __( 'Newest first (date ↓)', 'cns-wiki-suite' ),
     'date_asc'  => __( 'Oldest first (date ↑)', 'cns-wiki-suite' ),
@@ -247,6 +252,74 @@ $tag_count = empty( $wiki_ids ) ? 0 : count( get_terms( [
       </tr>
     </table>
 
+    <hr>
+
+    <?php /* ── Glossary ─────────────────────────────────────────────── */ ?>
+    <h2>
+      <?php esc_html_e( 'Glossary', 'cns-wiki-suite' ); ?>
+      <?php if ( $glossary_url ) : ?>
+        <a href="<?php echo esc_url( $glossary_url ); ?>" target="_blank"
+           style="font-size:13px;font-weight:normal;margin-left:12px;vertical-align:middle;"
+        ><?php esc_html_e( 'View glossary ↗', 'cns-wiki-suite' ); ?></a>
+      <?php endif; ?>
+    </h2>
+    <p class="description" style="margin-bottom:12px;">
+      <?php esc_html_e( 'A glossary of terms with its own archive page. Once enabled, mark text as a glossary term from the editor toolbar to get a tooltip definition and a link to the entry.', 'cns-wiki-suite' ); ?>
+    </p>
+    <table class="form-table" role="presentation">
+      <tr>
+        <th scope="row"><?php esc_html_e( 'Enable glossary', 'cns-wiki-suite' ); ?></th>
+        <td>
+          <label>
+            <input
+              type="checkbox"
+              id="cns_glossary_enabled"
+              name="cns_wiki_settings[glossary_enabled]"
+              value="1"
+              <?php checked( $glossary_enabled ); ?>
+            >
+            <?php esc_html_e( 'Enable the glossary post type, archive, and editor toolbar button', 'cns-wiki-suite' ); ?>
+          </label>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <label for="cns_glossary_slug"><?php esc_html_e( 'Archive URL slug', 'cns-wiki-suite' ); ?></label>
+        </th>
+        <td>
+          <input
+            type="text"
+            id="cns_glossary_slug"
+            name="cns_wiki_settings[glossary_slug]"
+            value="<?php echo esc_attr( $glossary_slug ); ?>"
+            class="regular-text"
+            pattern="[a-z0-9\-]+"
+            placeholder="glossary"
+          >
+          <p class="description">
+            <?php esc_html_e( 'Lowercase letters, numbers, and hyphens only. Changes the glossary archive URL and all entry URLs — existing links will break.', 'cns-wiki-suite' ); ?>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <label for="cns_glossary_color"><?php esc_html_e( 'Entry text colour', 'cns-wiki-suite' ); ?></label>
+        </th>
+        <td>
+          <input type="color" id="cns_glossary_color"
+            name="cns_wiki_settings[glossary_text_color]"
+            value="<?php echo esc_attr( $glossary_color ?: '#ffffff' ); ?>">
+          <?php if ( $glossary_color ) : ?>
+            <label style="margin-left:8px;">
+              <input type="checkbox" id="cns_glossary_color_clear" style="vertical-align:middle;">
+              <?php esc_html_e( 'Clear (use theme default)', 'cns-wiki-suite' ); ?>
+            </label>
+          <?php endif; ?>
+          <p class="description"><?php esc_html_e( 'Colour of inline glossary terms in content. Leave empty to inherit the surrounding text colour.', 'cns-wiki-suite' ); ?></p>
+        </td>
+      </tr>
+    </table>
+
     <?php submit_button(); ?>
   </form>
 </div>
@@ -261,6 +334,7 @@ $tag_count = empty( $wiki_ids ) ? 0 : count( get_terms( [
         ['cns_infobox_bg_clear',       'cns_infobox_bg'],
         ['cns_infobox_contrast_clear', 'cns_infobox_contrast'],
         ['cns_infobox_border_clear',   'cns_infobox_border'],
+        ['cns_glossary_color_clear',   'cns_glossary_color'],
     ];
     pairs.forEach(function (pair) {
         var cb    = document.getElementById(pair[0]);

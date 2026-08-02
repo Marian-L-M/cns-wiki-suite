@@ -1,1 +1,629 @@
-(()=>{"use strict";var e,i={863(){const e=window.wp.blocks,i=JSON.parse('{"UU":"cns-wiki-suite/wiki-card"}'),t=window.wp.i18n,s=window.wp.blockEditor,o=window.wp.components,n=window.wp.data,a=window.wp.coreData,r=window.wp.element,l=window.ReactJSXRuntime;function c({currentPostType:e,onSelect:i,onClose:s}){const[n,c]=(0,r.useState)(""),[d,u]=(0,r.useState)(e),{records:_,isResolving:w}=(0,a.useEntityRecords)("postType",d,{search:n,per_page:10,_fields:"id,title",status:"publish"});return(0,l.jsxs)(o.Modal,{title:(0,t.__)("Select a post","cns-wiki-suite"),onRequestClose:s,className:"wiki-card-modal",children:[(0,l.jsx)(o.SelectControl,{label:(0,t.__)("Post type","cns-wiki-suite"),value:d,options:[{label:(0,t.__)("Wiki","cns-wiki-suite"),value:"wiki"},{label:(0,t.__)("Post","cns-wiki-suite"),value:"post"},{label:(0,t.__)("Page","cns-wiki-suite"),value:"page"}],onChange:u,__next40pxDefaultSize:!0}),(0,l.jsx)(o.SearchControl,{value:n,onChange:c,placeholder:(0,t.__)("Search…","cns-wiki-suite"),__next40pxDefaultSize:!0}),(0,l.jsxs)("div",{className:"wiki-card-modal__results",children:[w&&(0,l.jsx)(o.Spinner,{}),!w&&0===_?.length&&(0,l.jsx)("p",{className:"wiki-card-modal__empty",children:(0,t.__)("No posts found.","cns-wiki-suite")}),_?.map(e=>(0,l.jsx)("button",{className:"wiki-card-modal__result",onClick:()=>i(e.id,d),type:"button",children:e.title?.rendered??e.title?.raw??`#${e.id}`},e.id))]})]})}function d({postId:e,postType:i,attributes:s}){const{backgroundColor:r,textColor:c,showThumbnail:d,showTitle:u,showCategories:_,showExcerpt:w,showTags:h,showLink:p}=s,{post:k,mediaUrl:g,catTerms:m,tagTerms:x}=(0,n.useSelect)(t=>{const{getEntityRecord:s,getMedia:o}=t(a.store),n=s("postType",i,e),r=n?.featured_media,l=r?o(r):null,c=(n?.categories??[]).map(e=>s("taxonomy","category",e)).filter(Boolean),d=(n?.tags??[]).map(e=>s("taxonomy","post_tag",e)).filter(Boolean);return{post:n,mediaUrl:l?.media_details?.sizes?.medium?.source_url||l?.source_url||null,catTerms:c,tagTerms:d}},[e,i]);if(!k)return(0,l.jsx)("div",{className:"wiki-card wiki-card--loading",style:{backgroundColor:r},children:(0,l.jsx)(o.Spinner,{})});const C=k.title?.rendered??"",b=k.excerpt?.rendered??"",j={backgroundColor:r};return c&&(j.color=c),(0,l.jsxs)("div",{className:"wiki-card",style:j,children:[d&&g&&(0,l.jsx)("div",{className:"wiki-card__thumbnail",children:(0,l.jsx)("img",{src:g,alt:C})}),u&&(0,l.jsx)("h3",{className:"wiki-card__title",children:C}),_&&m.length>0&&(0,l.jsx)("div",{className:"wiki-card__categories",children:m.map(e=>(0,l.jsx)("span",{className:"wiki-card__term wiki-card__term--category",children:e.name},e.id))}),w&&b&&(0,l.jsx)("div",{className:"wiki-card__excerpt",dangerouslySetInnerHTML:{__html:b}}),h&&x.length>0&&(0,l.jsx)("div",{className:"wiki-card__tags",children:x.map(e=>(0,l.jsx)("span",{className:"wiki-card__term wiki-card__term--tag",children:e.name},e.id))}),p&&(0,l.jsx)("span",{className:"wiki-card__link",children:(0,t.__)("Read more","cns-wiki-suite")})]})}(0,e.registerBlockType)(i.UU,{edit:function({attributes:e,setAttributes:i}){const{postId:n,postType:a,backgroundColor:u,textColor:_,showThumbnail:w,showTitle:h,showCategories:p,showExcerpt:k,showTags:g,showLink:m}=e,[x,C]=(0,r.useState)(!1);return(0,l.jsxs)("div",{...(0,s.useBlockProps)(),children:[(0,l.jsxs)(s.InspectorControls,{children:[(0,l.jsxs)(o.PanelBody,{title:(0,t.__)("Card Settings","cns-wiki-suite"),initialOpen:!0,children:[(0,l.jsx)(o.ToggleControl,{label:(0,t.__)("Show thumbnail","cns-wiki-suite"),checked:w,onChange:e=>i({showThumbnail:e}),__nextHasNoMarginBottom:!0}),(0,l.jsx)(o.ToggleControl,{label:(0,t.__)("Show title","cns-wiki-suite"),checked:h,onChange:e=>i({showTitle:e}),__nextHasNoMarginBottom:!0}),(0,l.jsx)(o.ToggleControl,{label:(0,t.__)("Show categories","cns-wiki-suite"),checked:p,onChange:e=>i({showCategories:e}),__nextHasNoMarginBottom:!0}),(0,l.jsx)(o.ToggleControl,{label:(0,t.__)("Show excerpt","cns-wiki-suite"),checked:k,onChange:e=>i({showExcerpt:e}),__nextHasNoMarginBottom:!0}),(0,l.jsx)(o.ToggleControl,{label:(0,t.__)("Show tags","cns-wiki-suite"),checked:g,onChange:e=>i({showTags:e}),__nextHasNoMarginBottom:!0}),(0,l.jsx)(o.ToggleControl,{label:(0,t.__)("Show read more link","cns-wiki-suite"),checked:m,onChange:e=>i({showLink:e}),__nextHasNoMarginBottom:!0})]}),(0,l.jsx)(s.PanelColorSettings,{title:(0,t.__)("Color","cns-wiki-suite"),initialOpen:!1,colorSettings:[{value:u,onChange:e=>i({backgroundColor:e??"#f0f0f0"}),label:(0,t.__)("Background color","cns-wiki-suite")},{value:_,onChange:e=>i({textColor:e??""}),label:(0,t.__)("Text color","cns-wiki-suite")}]}),n>0&&(0,l.jsx)(o.PanelBody,{title:(0,t.__)("Post","cns-wiki-suite"),initialOpen:!1,children:(0,l.jsx)(o.PanelRow,{children:(0,l.jsx)(o.Button,{variant:"secondary",onClick:()=>C(!0),children:(0,t.__)("Change post","cns-wiki-suite")})})})]}),x&&(0,l.jsx)(c,{currentPostType:a,onSelect:(e,t)=>{i({postId:e,postType:t}),C(!1)},onClose:()=>C(!1)}),0===n?(0,l.jsx)(o.Placeholder,{icon:"index-card",label:(0,t.__)("Wiki Card","cns-wiki-suite"),instructions:(0,t.__)("Select a post to display as a card.","cns-wiki-suite"),children:(0,l.jsx)(o.Button,{variant:"primary",onClick:()=>C(!0),children:(0,t.__)("Select post","cns-wiki-suite")})}):(0,l.jsx)(d,{postId:n,postType:a,attributes:e})]})},save:function(){return null}})}},t={};function s(e){var o=t[e];if(void 0!==o)return o.exports;var n=t[e]={exports:{}};return i[e](n,n.exports,s),n.exports}s.m=i,e=[],s.O=(i,t,o,n)=>{if(!t){var a=1/0;for(d=0;d<e.length;d++){for(var[t,o,n]=e[d],r=!0,l=0;l<t.length;l++)(!1&n||a>=n)&&Object.keys(s.O).every(e=>s.O[e](t[l]))?t.splice(l--,1):(r=!1,n<a&&(a=n));if(r){e.splice(d--,1);var c=o();void 0!==c&&(i=c)}}return i}n=n||0;for(var d=e.length;d>0&&e[d-1][2]>n;d--)e[d]=e[d-1];e[d]=[t,o,n]},s.o=(e,i)=>Object.prototype.hasOwnProperty.call(e,i),(()=>{var e={90:0,766:0};s.O.j=i=>0===e[i];var i=(i,t)=>{var o,n,[a,r,l]=t,c=0;if(a.some(i=>0!==e[i])){for(o in r)s.o(r,o)&&(s.m[o]=r[o]);if(l)var d=l(s)}for(i&&i(t);c<a.length;c++)n=a[c],s.o(e,n)&&e[n]&&e[n][0](),e[n]=0;return s.O(d)},t=globalThis.webpackChunkcns_wiki_suite=globalThis.webpackChunkcns_wiki_suite||[];t.forEach(i.bind(null,0)),t.push=i.bind(null,t.push.bind(t))})();var o=s.O(void 0,[766],()=>s(863));o=s.O(o)})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/blocks/wiki-card/edit.js"
+/*!**************************************!*\
+  !*** ./src/blocks/wiki-card/edit.js ***!
+  \**************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Edit)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor.scss */ "./src/blocks/wiki-card/editor.scss");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__);
+
+
+
+
+
+
+
+
+function PostSelectorModal({
+  currentPostType,
+  onSelect,
+  onClose
+}) {
+  const [search, setSearch] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)('');
+  const [postType, setPostType] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)(currentPostType);
+  const {
+    records,
+    isResolving
+  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__.useEntityRecords)('postType', postType, {
+    search,
+    per_page: 10,
+    _fields: 'id,title',
+    status: 'publish'
+  });
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Modal, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Select a post', 'cns-wiki-suite'),
+    onRequestClose: onClose,
+    className: "wiki-card-modal",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Post type', 'cns-wiki-suite'),
+      value: postType,
+      options: [{
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Wiki', 'cns-wiki-suite'),
+        value: 'wiki'
+      }, {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Post', 'cns-wiki-suite'),
+        value: 'post'
+      }, {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Page', 'cns-wiki-suite'),
+        value: 'page'
+      }],
+      onChange: setPostType,
+      __next40pxDefaultSize: true
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SearchControl, {
+      value: search,
+      onChange: setSearch,
+      placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Search…', 'cns-wiki-suite'),
+      __next40pxDefaultSize: true
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      className: "wiki-card-modal__results",
+      children: [isResolving && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Spinner, {}), !isResolving && records?.length === 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+        className: "wiki-card-modal__empty",
+        children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('No posts found.', 'cns-wiki-suite')
+      }), records?.map(post => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+        className: "wiki-card-modal__result",
+        onClick: () => onSelect(post.id, postType),
+        type: "button",
+        children: post.title?.rendered ?? post.title?.raw ?? `#${post.id}`
+      }, post.id))]
+    })]
+  });
+}
+function CardPreview({
+  postId,
+  postType,
+  attributes
+}) {
+  const {
+    backgroundColor,
+    textColor,
+    showThumbnail,
+    showTitle,
+    showCategories,
+    showExcerpt,
+    showTags,
+    showLink
+  } = attributes;
+  const {
+    post,
+    mediaUrl,
+    catTerms,
+    tagTerms
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => {
+    const {
+      getEntityRecord,
+      getMedia
+    } = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__.store);
+    const p = getEntityRecord('postType', postType, postId);
+    const mediaId = p?.featured_media;
+    const media = mediaId ? getMedia(mediaId) : null;
+    const catTerms = (p?.categories ?? []).map(id => getEntityRecord('taxonomy', 'category', id)).filter(Boolean);
+    const tagTerms = (p?.tags ?? []).map(id => getEntityRecord('taxonomy', 'post_tag', id)).filter(Boolean);
+    return {
+      post: p,
+      mediaUrl: media?.media_details?.sizes?.medium?.source_url || media?.source_url || null,
+      catTerms,
+      tagTerms
+    };
+  }, [postId, postType]);
+  if (!post) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      className: "wiki-card wiki-card--loading",
+      style: {
+        backgroundColor
+      },
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Spinner, {})
+    });
+  }
+  const title = post.title?.rendered ?? '';
+  const excerpt = post.excerpt?.rendered ?? '';
+  const cardStyle = {
+    backgroundColor
+  };
+  if (textColor) cardStyle.color = textColor;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+    className: "wiki-card",
+    style: cardStyle,
+    children: [showThumbnail && mediaUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      className: "wiki-card__thumbnail",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
+        src: mediaUrl,
+        alt: title
+      })
+    }), showTitle && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h3", {
+      className: "wiki-card__title",
+      children: title
+    }), showCategories && catTerms.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      className: "wiki-card__categories",
+      children: catTerms.map(term => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+        className: "wiki-card__term wiki-card__term--category",
+        children: term.name
+      }, term.id))
+    }), showExcerpt && excerpt && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      className: "wiki-card__excerpt",
+      dangerouslySetInnerHTML: {
+        __html: excerpt
+      }
+    }), showTags && tagTerms.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      className: "wiki-card__tags",
+      children: tagTerms.map(term => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+        className: "wiki-card__term wiki-card__term--tag",
+        children: term.name
+      }, term.id))
+    }), showLink && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+      className: "wiki-card__link",
+      children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Read more', 'cns-wiki-suite')
+    })]
+  });
+}
+function Edit({
+  attributes,
+  setAttributes
+}) {
+  const {
+    postId,
+    postType,
+    backgroundColor,
+    textColor,
+    showThumbnail,
+    showTitle,
+    showCategories,
+    showExcerpt,
+    showTags,
+    showLink
+  } = attributes;
+  const [isModalOpen, setIsModalOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)(false);
+  const handleSelect = (id, type) => {
+    setAttributes({
+      postId: id,
+      postType: type
+    });
+    setIsModalOpen(false);
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)(),
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Card Settings', 'cns-wiki-suite'),
+        initialOpen: true,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show thumbnail', 'cns-wiki-suite'),
+          checked: showThumbnail,
+          onChange: val => setAttributes({
+            showThumbnail: val
+          }),
+          __nextHasNoMarginBottom: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show title', 'cns-wiki-suite'),
+          checked: showTitle,
+          onChange: val => setAttributes({
+            showTitle: val
+          }),
+          __nextHasNoMarginBottom: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show categories', 'cns-wiki-suite'),
+          checked: showCategories,
+          onChange: val => setAttributes({
+            showCategories: val
+          }),
+          __nextHasNoMarginBottom: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show excerpt', 'cns-wiki-suite'),
+          checked: showExcerpt,
+          onChange: val => setAttributes({
+            showExcerpt: val
+          }),
+          __nextHasNoMarginBottom: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show tags', 'cns-wiki-suite'),
+          checked: showTags,
+          onChange: val => setAttributes({
+            showTags: val
+          }),
+          __nextHasNoMarginBottom: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show read more link', 'cns-wiki-suite'),
+          checked: showLink,
+          onChange: val => setAttributes({
+            showLink: val
+          }),
+          __nextHasNoMarginBottom: true
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.PanelColorSettings, {
+        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Color', 'cns-wiki-suite'),
+        initialOpen: false,
+        colorSettings: [{
+          value: backgroundColor,
+          onChange: val => setAttributes({
+            backgroundColor: val ?? '#f0f0f0'
+          }),
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Background color', 'cns-wiki-suite')
+        }, {
+          value: textColor,
+          onChange: val => setAttributes({
+            textColor: val ?? ''
+          }),
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Text color', 'cns-wiki-suite')
+        }]
+      }), postId > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Post', 'cns-wiki-suite'),
+        initialOpen: false,
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+            variant: "secondary",
+            onClick: () => setIsModalOpen(true),
+            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Change post', 'cns-wiki-suite')
+          })
+        })
+      })]
+    }), isModalOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(PostSelectorModal, {
+      currentPostType: postType,
+      onSelect: handleSelect,
+      onClose: () => setIsModalOpen(false)
+    }), postId === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Placeholder, {
+      icon: "index-card",
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Wiki Card', 'cns-wiki-suite'),
+      instructions: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Select a post to display as a card.', 'cns-wiki-suite'),
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+        variant: "primary",
+        onClick: () => setIsModalOpen(true),
+        children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Select post', 'cns-wiki-suite')
+      })
+    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(CardPreview, {
+      postId: postId,
+      postType: postType,
+      attributes: attributes
+    })]
+  });
+}
+
+/***/ },
+
+/***/ "./src/blocks/wiki-card/index.js"
+/*!***************************************!*\
+  !*** ./src/blocks/wiki-card/index.js ***!
+  \***************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/wiki-card/style.scss");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./block.json */ "./src/blocks/wiki-card/block.json");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit */ "./src/blocks/wiki-card/edit.js");
+/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./save */ "./src/blocks/wiki-card/save.js");
+
+
+
+
+
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_2__.name, {
+  edit: _edit__WEBPACK_IMPORTED_MODULE_3__["default"],
+  save: _save__WEBPACK_IMPORTED_MODULE_4__["default"]
+});
+
+/***/ },
+
+/***/ "./src/blocks/wiki-card/save.js"
+/*!**************************************!*\
+  !*** ./src/blocks/wiki-card/save.js ***!
+  \**************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ save)
+/* harmony export */ });
+function save() {
+  return null;
+}
+
+/***/ },
+
+/***/ "./src/blocks/wiki-card/editor.scss"
+/*!******************************************!*\
+  !*** ./src/blocks/wiki-card/editor.scss ***!
+  \******************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ },
+
+/***/ "./src/blocks/wiki-card/style.scss"
+/*!*****************************************!*\
+  !*** ./src/blocks/wiki-card/style.scss ***!
+  \*****************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ },
+
+/***/ "react/jsx-runtime"
+/*!**********************************!*\
+  !*** external "ReactJSXRuntime" ***!
+  \**********************************/
+(module) {
+
+module.exports = window["ReactJSXRuntime"];
+
+/***/ },
+
+/***/ "@wordpress/block-editor"
+/*!*************************************!*\
+  !*** external ["wp","blockEditor"] ***!
+  \*************************************/
+(module) {
+
+module.exports = window["wp"]["blockEditor"];
+
+/***/ },
+
+/***/ "@wordpress/blocks"
+/*!********************************!*\
+  !*** external ["wp","blocks"] ***!
+  \********************************/
+(module) {
+
+module.exports = window["wp"]["blocks"];
+
+/***/ },
+
+/***/ "@wordpress/components"
+/*!************************************!*\
+  !*** external ["wp","components"] ***!
+  \************************************/
+(module) {
+
+module.exports = window["wp"]["components"];
+
+/***/ },
+
+/***/ "@wordpress/core-data"
+/*!**********************************!*\
+  !*** external ["wp","coreData"] ***!
+  \**********************************/
+(module) {
+
+module.exports = window["wp"]["coreData"];
+
+/***/ },
+
+/***/ "@wordpress/data"
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
+(module) {
+
+module.exports = window["wp"]["data"];
+
+/***/ },
+
+/***/ "@wordpress/element"
+/*!*********************************!*\
+  !*** external ["wp","element"] ***!
+  \*********************************/
+(module) {
+
+module.exports = window["wp"]["element"];
+
+/***/ },
+
+/***/ "@wordpress/i18n"
+/*!******************************!*\
+  !*** external ["wp","i18n"] ***!
+  \******************************/
+(module) {
+
+module.exports = window["wp"]["i18n"];
+
+/***/ },
+
+/***/ "./src/blocks/wiki-card/block.json"
+/*!*****************************************!*\
+  !*** ./src/blocks/wiki-card/block.json ***!
+  \*****************************************/
+(module) {
+
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"cns-wiki-suite/wiki-card","version":"0.1.0","title":"Wiki Card","category":"widgets","icon":"index-card","description":"Display a post as a card with thumbnail, title, excerpt and link. Designed for wiki post types.","example":{},"supports":{"html":false},"attributes":{"postId":{"type":"number","default":0},"postType":{"type":"string","default":"wiki"},"backgroundColor":{"type":"string","default":"#f0f0f0"},"textColor":{"type":"string","default":""},"showThumbnail":{"type":"boolean","default":true},"showTitle":{"type":"boolean","default":true},"showCategories":{"type":"boolean","default":false},"showExcerpt":{"type":"boolean","default":true},"showTags":{"type":"boolean","default":false},"showLink":{"type":"boolean","default":true}},"textdomain":"cns-wiki-suite","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php"}');
+
+/***/ }
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		if (!(moduleId in __webpack_modules__)) {
+/******/ 			delete __webpack_module_cache__[moduleId];
+/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
+/******/ 			e.code = 'MODULE_NOT_FOUND';
+/******/ 			throw e;
+/******/ 		}
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/chunk loaded */
+/******/ 	(() => {
+/******/ 		var deferred = [];
+/******/ 		__webpack_require__.O = (result, chunkIds, fn, priority) => {
+/******/ 			if(chunkIds) {
+/******/ 				priority = priority || 0;
+/******/ 				for(var i = deferred.length; i > 0 && deferred[i - 1][2] > priority; i--) deferred[i] = deferred[i - 1];
+/******/ 				deferred[i] = [chunkIds, fn, priority];
+/******/ 				return;
+/******/ 			}
+/******/ 			var notFulfilled = Infinity;
+/******/ 			for (var i = 0; i < deferred.length; i++) {
+/******/ 				var [chunkIds, fn, priority] = deferred[i];
+/******/ 				var fulfilled = true;
+/******/ 				for (var j = 0; j < chunkIds.length; j++) {
+/******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every((key) => (__webpack_require__.O[key](chunkIds[j])))) {
+/******/ 						chunkIds.splice(j--, 1);
+/******/ 					} else {
+/******/ 						fulfilled = false;
+/******/ 						if(priority < notFulfilled) notFulfilled = priority;
+/******/ 					}
+/******/ 				}
+/******/ 				if(fulfilled) {
+/******/ 					deferred.splice(i--, 1)
+/******/ 					var r = fn();
+/******/ 					if (r !== undefined) result = r;
+/******/ 				}
+/******/ 			}
+/******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		// no baseURI
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"blocks/wiki-card/index": 0,
+/******/ 			"blocks/wiki-card/style-index": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
+/******/ 		
+/******/ 		// install a JSONP callback for chunk loading
+/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
+/******/ 			var [chunkIds, moreModules, runtime] = data;
+/******/ 			// add "moreModules" to the modules object,
+/******/ 			// then flag all "chunkIds" as loaded and fire callback
+/******/ 			var moduleId, chunkId, i = 0;
+/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
+/******/ 				for(moduleId in moreModules) {
+/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
+/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 					}
+/******/ 				}
+/******/ 				if(runtime) var result = runtime(__webpack_require__);
+/******/ 			}
+/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
+/******/ 			for(;i < chunkIds.length; i++) {
+/******/ 				chunkId = chunkIds[i];
+/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 					installedChunks[chunkId][0]();
+/******/ 				}
+/******/ 				installedChunks[chunkId] = 0;
+/******/ 			}
+/******/ 			return __webpack_require__.O(result);
+/******/ 		}
+/******/ 		
+/******/ 		var chunkLoadingGlobal = globalThis["webpackChunkcns_wiki_suite"] = globalThis["webpackChunkcns_wiki_suite"] || [];
+/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
+/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["blocks/wiki-card/style-index"], () => (__webpack_require__("./src/blocks/wiki-card/index.js")))
+/******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
+/******/ 	
+/******/ })()
+;
+//# sourceMappingURL=index.js.map

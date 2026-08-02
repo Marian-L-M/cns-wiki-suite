@@ -1,6 +1,49 @@
 <?php
 // This file is generated. Do not modify it manually.
 return array(
+	'glossary-index' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'cns-wiki-suite/glossary-index',
+		'version' => '0.1.0',
+		'title' => 'Glossary Index',
+		'category' => 'widgets',
+		'icon' => 'book-alt',
+		'description' => 'Lists all glossary entries grouped alphabetically or by category, with links to each definition.',
+		'example' => array(
+			
+		),
+		'supports' => array(
+			'html' => false,
+			'align' => array(
+				'wide',
+				'full'
+			),
+			'spacing' => array(
+				'margin' => true,
+				'padding' => true
+			)
+		),
+		'attributes' => array(
+			'groupBy' => array(
+				'type' => 'string',
+				'default' => 'alphabetical',
+				'enum' => array(
+					'alphabetical',
+					'category'
+				)
+			),
+			'showEmptyNotice' => array(
+				'type' => 'boolean',
+				'default' => true
+			)
+		),
+		'textdomain' => 'cns-wiki-suite',
+		'editorScript' => 'file:./index.js',
+		'editorStyle' => 'file:./index.css',
+		'style' => 'file:./style-index.css',
+		'render' => 'file:./render.php'
+	),
 	'infobox' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,

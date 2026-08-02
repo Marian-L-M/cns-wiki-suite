@@ -35,17 +35,21 @@ function cns_wiki_register_blocks(): void
 }
 add_action('init', 'cns_wiki_register_blocks');
 
+// CNS theme admin panel integration (also defines cns_get_wiki_setting)
+require __DIR__ . '/admin/cns-wiki-admin.php';
+
 // Setup wiki post type
 require __DIR__ . '/wiki/setup.php';
 
-// CNS theme admin panel integration
-require __DIR__ . '/admin/cns-wiki-admin.php';
+// Setup glossary post type + inline term rendering (opt-in via settings)
+require __DIR__ . '/glossary/setup.php';
 
 // ── Lifecycle hooks ───────────────────────────────────────────────────────────
 
 function cns_wiki_suite_activate(): void
 {
 	cns_wiki_register_post_type();
+	cns_wiki_register_glossary_post_type();
 	flush_rewrite_rules();
 }
 register_activation_hook(__FILE__, 'cns_wiki_suite_activate');
@@ -54,6 +58,9 @@ function cns_wiki_suite_deactivate(): void
 {
 	if (post_type_exists('wiki')) {
 		unregister_post_type('wiki');
+	}
+	if (post_type_exists('glossary')) {
+		unregister_post_type('glossary');
 	}
 	flush_rewrite_rules();
 }
