@@ -18,13 +18,25 @@ import './editor.scss';
 
 const ALLOWED_BLOCKS = [ 'cns-wiki-suite/wiki-card' ];
 
+// Site-wide grid defaults (CNS → Wiki tab), injected by PHP before this
+// script. Grid attributes stay unset until the user touches them, so blocks
+// without explicit values follow these settings — here and on the frontend.
+const GRID_DEFAULTS = {
+	columnsMobile: 1,
+	columnsTablet: 2,
+	columnsDesktop: 3,
+	columnGap: 16,
+	rowGap: 16,
+	...( window.cnsWikiGridDefaults || {} ),
+};
+
 function GridTabs( { breakpoint, attributes, setAttributes } ) {
 	const columnKey = `columns${ breakpoint }`;
 
 	return (
 		<RangeControl
 			label={ __( 'Columns', 'cns-wiki-suite' ) }
-			value={ attributes[ columnKey ] }
+			value={ attributes[ columnKey ] ?? GRID_DEFAULTS[ columnKey ] }
 			onChange={ ( v ) => setAttributes( { [ columnKey ]: v } ) }
 			min={ 1 }
 			max={ 6 }
@@ -40,8 +52,8 @@ function NewestPreviewGrid( { columns, numberOfPosts, columnGap, rowGap } ) {
 			className="wiki-contents__grid wiki-contents__grid--preview"
 			style={ {
 				'--wiki-columns-desktop': columns,
-				'--wiki-column-gap': columnGap,
-				'--wiki-row-gap': rowGap,
+				'--wiki-column-gap': `${ columnGap }px`,
+				'--wiki-row-gap': `${ rowGap }px`,
 			} }
 		>
 			{ Array( numberOfPosts )
@@ -58,15 +70,12 @@ function NewestPreviewGrid( { columns, numberOfPosts, columnGap, rowGap } ) {
 }
 
 export default function Edit( { attributes, setAttributes, clientId } ) {
-	const {
-		mode,
-		columnsMobile,
-		columnsTablet,
-		columnsDesktop,
-		numberOfPosts,
-		columnGap,
-		rowGap,
-	} = attributes;
+	const { mode, numberOfPosts } = attributes;
+	const columnsMobile  = attributes.columnsMobile  ?? GRID_DEFAULTS.columnsMobile;
+	const columnsTablet  = attributes.columnsTablet  ?? GRID_DEFAULTS.columnsTablet;
+	const columnsDesktop = attributes.columnsDesktop ?? GRID_DEFAULTS.columnsDesktop;
+	const columnGap      = attributes.columnGap      ?? GRID_DEFAULTS.columnGap;
+	const rowGap         = attributes.rowGap         ?? GRID_DEFAULTS.rowGap;
 
 	const { replaceInnerBlocks } = useDispatch( blockEditorStore );
 	const innerBlocks = useSelect(

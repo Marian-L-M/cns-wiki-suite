@@ -139,6 +139,31 @@ function cns_wiki_register_post_type()
 add_action('init', 'cns_wiki_register_post_type');
 
 
+/**
+ * Substitutes the placeholder thumbnail (CNS → Wiki tab) for wiki posts that
+ * have no cover image. Hooking post_thumbnail_id covers every consumer at
+ * once — wiki cards, the archive's post-featured-image block, and theme
+ * templates. Frontend only, so the admin list and editor still show which
+ * wikis genuinely lack a cover image.
+ */
+function cns_wiki_placeholder_thumbnail_id( $thumbnail_id, $post )
+{
+    if ( $thumbnail_id || is_admin() ) {
+        return $thumbnail_id;
+    }
+
+    $post = get_post( $post );
+    if ( ! $post || 'wiki' !== $post->post_type ) {
+        return $thumbnail_id;
+    }
+
+    $placeholder = absint( cns_get_wiki_setting( 'placeholder_thumb_id', 0 ) );
+
+    return $placeholder && wp_attachment_is_image( $placeholder ) ? $placeholder : $thumbnail_id;
+}
+add_filter( 'post_thumbnail_id', 'cns_wiki_placeholder_thumbnail_id', 10, 2 );
+
+
 function cns_wiki_register_block_templates()
 {
     $templates_dir = plugin_dir_path( dirname( __FILE__ ) ) . 'templates/';

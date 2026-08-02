@@ -7,6 +7,8 @@
  * @var WP_Block $block      Block instance.
  */
 
+defined( 'ABSPATH' ) || exit;
+
 $mode            = $attributes['mode']           ?? 'manual';
 $columns_mobile  = intval( $attributes['columnsMobile']  ?? cns_get_wiki_setting( 'grid_columns_mobile',  1 ) );
 $columns_tablet  = intval( $attributes['columnsTablet']  ?? cns_get_wiki_setting( 'grid_columns_tablet',  2 ) );

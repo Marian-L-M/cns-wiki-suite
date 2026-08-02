@@ -7,6 +7,8 @@
  * @var WP_Block $block      Block instance.
  */
 
+defined( 'ABSPATH' ) || exit;
+
 $post_id    = intval( $attributes['postId'] ?? 0 );
 $bg_color   = $attributes['backgroundColor'] ?? '#f0f0f0';
 $text_color = $attributes['textColor'] ?? '';

@@ -274,28 +274,23 @@ return array(
 				'default' => 'manual'
 			),
 			'columnsMobile' => array(
-				'type' => 'number',
-				'default' => 1
+				'type' => 'number'
 			),
 			'columnsTablet' => array(
-				'type' => 'number',
-				'default' => 2
+				'type' => 'number'
 			),
 			'columnsDesktop' => array(
-				'type' => 'number',
-				'default' => 3
+				'type' => 'number'
 			),
 			'numberOfPosts' => array(
 				'type' => 'number',
 				'default' => 3
 			),
 			'columnGap' => array(
-				'type' => 'number',
-				'default' => 16
+				'type' => 'number'
 			),
 			'rowGap' => array(
-				'type' => 'number',
-				'default' => 16
+				'type' => 'number'
 			)
 		),
 		'textdomain' => 'cns-wiki-suite',

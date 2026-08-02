@@ -20,28 +20,23 @@
       "default": "manual"
     },
     "columnsMobile": {
-      "type": "number",
-      "default": 1
+      "type": "number"
     },
     "columnsTablet": {
-      "type": "number",
-      "default": 2
+      "type": "number"
     },
     "columnsDesktop": {
-      "type": "number",
-      "default": 3
+      "type": "number"
     },
     "numberOfPosts": {
       "type": "number",
       "default": 3
     },
     "columnGap": {
-      "type": "number",
-      "default": 16
+      "type": "number"
     },
     "rowGap": {
-      "type": "number",
-      "default": 16
+      "type": "number"
     }
   },
   "textdomain": "cns-wiki-suite",

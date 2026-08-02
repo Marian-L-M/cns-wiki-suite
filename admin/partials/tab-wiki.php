@@ -20,6 +20,9 @@ $infobox_bg       = cns_get_wiki_setting( 'infobox_bg_color',       '' );
 $infobox_contrast = cns_get_wiki_setting( 'infobox_contrast_color', '' );
 $infobox_border   = cns_get_wiki_setting( 'infobox_border_color',   '' );
 
+$placeholder_id  = absint( cns_get_wiki_setting( 'placeholder_thumb_id', 0 ) );
+$placeholder_url = $placeholder_id ? wp_get_attachment_image_url( $placeholder_id, 'medium' ) : '';
+
 $glossary_enabled = (bool) cns_get_wiki_setting( 'glossary_enabled', false );
 $glossary_slug    = cns_get_wiki_setting( 'glossary_slug', 'glossary' );
 $glossary_color   = cns_get_wiki_setting( 'glossary_text_color', '' );
@@ -140,6 +143,48 @@ $tag_count = empty( $wiki_ids ) ? 0 : count( get_terms( [
               </option>
             <?php endforeach; ?>
           </select>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <label><?php esc_html_e( 'Placeholder thumbnail', 'cns-wiki-suite' ); ?></label>
+        </th>
+        <td>
+          <input
+            type="hidden"
+            id="cns_wiki_placeholder_id"
+            name="cns_wiki_settings[placeholder_thumb_id]"
+            value="<?php echo esc_attr( $placeholder_id ?: '' ); ?>"
+          >
+          <img
+            id="cns_wiki_placeholder_preview"
+            src="<?php echo $placeholder_url ? esc_url( $placeholder_url ) : ''; ?>"
+            style="max-height:80px;display:<?php echo $placeholder_url ? 'block' : 'none'; ?>;margin-bottom:8px;"
+            alt=""
+          >
+          <button
+            type="button"
+            id="cns_wiki_placeholder_btn"
+            class="button cns-media-btn"
+            data-input="cns_wiki_placeholder_id"
+            data-preview="cns_wiki_placeholder_preview"
+            data-remove="cns_wiki_placeholder_remove"
+            data-title="<?php esc_attr_e( 'Select placeholder thumbnail', 'cns-wiki-suite' ); ?>"
+            data-select-label="<?php esc_attr_e( 'Select image', 'cns-wiki-suite' ); ?>"
+            data-change-label="<?php esc_attr_e( 'Change image', 'cns-wiki-suite' ); ?>"
+          ><?php echo $placeholder_id ? esc_html__( 'Change image', 'cns-wiki-suite' ) : esc_html__( 'Select image', 'cns-wiki-suite' ); ?></button>
+          <button
+            type="button"
+            id="cns_wiki_placeholder_remove"
+            class="button cns-media-remove-btn"
+            data-input="cns_wiki_placeholder_id"
+            data-preview="cns_wiki_placeholder_preview"
+            data-picker="cns_wiki_placeholder_btn"
+            style="display:<?php echo $placeholder_id ? 'inline-block' : 'none'; ?>;"
+          ><?php esc_html_e( 'Remove', 'cns-wiki-suite' ); ?></button>
+          <p class="description">
+            <?php esc_html_e( 'Shown in wiki cards and the wiki archive when a wiki has no cover image. Leave empty to show no image.', 'cns-wiki-suite' ); ?>
+          </p>
         </td>
       </tr>
     </table>

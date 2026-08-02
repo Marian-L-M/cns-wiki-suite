@@ -44,6 +44,10 @@ function cns_sanitize_wiki_settings( $input ): array {
     $order                   = sanitize_key( $input['archive_order'] ?? 'date_desc' );
     $output['archive_order'] = in_array( $order, $valid_orders, true ) ? $order : 'date_desc';
 
+    // Placeholder thumbnail (attachment ID, 0 = none)
+    $placeholder_id = absint( $input['placeholder_thumb_id'] ?? 0 );
+    $output['placeholder_thumb_id'] = $placeholder_id && wp_attachment_is_image( $placeholder_id ) ? $placeholder_id : 0;
+
     // Grid defaults
     $output['grid_columns_desktop'] = min( 6, max( 1, (int) ( $input['grid_columns_desktop'] ?? 3 ) ) );
     $output['grid_columns_tablet']  = min( 4, max( 1, (int) ( $input['grid_columns_tablet']  ?? 2 ) ) );
@@ -130,6 +134,66 @@ function cns_wiki_enqueue_infobox_styles(): void {
     wp_register_style( 'cns-wiki-infobox-overrides', false );
     wp_enqueue_style( 'cns-wiki-infobox-overrides' );
     wp_add_inline_style( 'cns-wiki-infobox-overrides', $css );
+}
+
+// ── Archive grid styles ───────────────────────────────────────────────────────
+//
+// The archive template renders wikis through a core query loop, not the
+// wiki-contents block, so the grid defaults are applied here as generated CSS.
+// Breakpoints mirror the wiki-contents block's style.scss (1024px / 768px).
+
+add_action( 'wp_enqueue_scripts', 'cns_wiki_enqueue_archive_grid_styles' );
+
+function cns_wiki_enqueue_archive_grid_styles(): void {
+    if ( ! is_post_type_archive( 'wiki' ) ) {
+        return;
+    }
+
+    $desktop = (int) cns_get_wiki_setting( 'grid_columns_desktop', 3 );
+    $tablet  = (int) cns_get_wiki_setting( 'grid_columns_tablet',  2 );
+    $mobile  = (int) cns_get_wiki_setting( 'grid_columns_mobile',  1 );
+    $col_gap = (int) cns_get_wiki_setting( 'grid_column_gap', 16 );
+    $row_gap = (int) cns_get_wiki_setting( 'grid_row_gap',    16 );
+
+    $css = sprintf(
+        '.wp-block-post-template.wiki-archive__grid{display:grid;grid-template-columns:repeat(%1$d,minmax(0,1fr));column-gap:%4$dpx;row-gap:%5$dpx;}' .
+        '.wp-block-post-template.wiki-archive__grid > li{margin:0;width:auto;}' .
+        '@media (max-width:1024px){.wp-block-post-template.wiki-archive__grid{grid-template-columns:repeat(%2$d,minmax(0,1fr));}}' .
+        '@media (max-width:768px){.wp-block-post-template.wiki-archive__grid{grid-template-columns:repeat(%3$d,minmax(0,1fr));}}',
+        $desktop,
+        $tablet,
+        $mobile,
+        $col_gap,
+        $row_gap
+    );
+
+    wp_register_style( 'cns-wiki-archive-grid', false );
+    wp_enqueue_style( 'cns-wiki-archive-grid' );
+    wp_add_inline_style( 'cns-wiki-archive-grid', $css );
+}
+
+// ── Editor grid defaults ──────────────────────────────────────────────────────
+//
+// The wiki-contents block leaves its grid attributes unset until the user
+// touches them, so the render callback can fall back to these settings. The
+// same values are handed to the editor script so its preview matches.
+
+add_action( 'enqueue_block_editor_assets', 'cns_wiki_expose_grid_defaults' );
+
+function cns_wiki_expose_grid_defaults(): void {
+    $defaults = [
+        'columnsDesktop' => (int) cns_get_wiki_setting( 'grid_columns_desktop', 3 ),
+        'columnsTablet'  => (int) cns_get_wiki_setting( 'grid_columns_tablet',  2 ),
+        'columnsMobile'  => (int) cns_get_wiki_setting( 'grid_columns_mobile',  1 ),
+        'columnGap'      => (int) cns_get_wiki_setting( 'grid_column_gap', 16 ),
+        'rowGap'         => (int) cns_get_wiki_setting( 'grid_row_gap',    16 ),
+    ];
+
+    wp_add_inline_script(
+        'cns-wiki-suite-wiki-contents-editor-script',
+        'window.cnsWikiGridDefaults = ' . wp_json_encode( $defaults ) . ';',
+        'before'
+    );
 }
 
 // ── Archive query overrides ───────────────────────────────────────────────────

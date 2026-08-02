@@ -1,8 +1,8 @@
 {
 	"name": "cns-wiki-suite",
 	"version": "0.1.0",
-	"description": "A wordpress plugin block toolset for create wiki like experiences.",
-	"author": "The WordPress Contributors",
+	"description": "A WordPress plugin block toolset to create wiki-like experiences.",
+	"author": "Marian Maschke",
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
 	"scripts": {

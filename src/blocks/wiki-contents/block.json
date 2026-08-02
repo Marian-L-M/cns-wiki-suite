@@ -14,12 +14,12 @@
 	"allowedBlocks": [ "cns-wiki-suite/wiki-card" ],
 	"attributes": {
 		"mode": { "type": "string", "default": "manual" },
-		"columnsMobile":  { "type": "number", "default": 1 },
-		"columnsTablet":  { "type": "number", "default": 2 },
-		"columnsDesktop": { "type": "number", "default": 3 },
+		"columnsMobile":  { "type": "number" },
+		"columnsTablet":  { "type": "number" },
+		"columnsDesktop": { "type": "number" },
 		"numberOfPosts":  { "type": "number", "default": 3 },
-		"columnGap": { "type": "number", "default": 16 },
-		"rowGap":    { "type": "number", "default": 16 }
+		"columnGap": { "type": "number" },
+		"rowGap":    { "type": "number" }
 	},
 	"textdomain": "cns-wiki-suite",
 	"editorScript": "file:./index.js",
